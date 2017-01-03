@@ -8,5 +8,9 @@
     "start": "forever -c 'nodemon --exitcrash' app.js"
   },
   "author": "laidet_r",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "forever": "^0.15.3",
+    "nodemon": "^1.11.0"
+  }
 }
