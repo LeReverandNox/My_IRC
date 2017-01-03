@@ -1,0 +1,12 @@
+{
+  "name": "my_irc",
+  "version": "1.0.0",
+  "description": "A kick-ass IRC server/client in NodeJS with Socket.io",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "forever -c 'nodemon --exitcrash' app.js"
+  },
+  "author": "laidet_r",
+  "license": "ISC"
+}
