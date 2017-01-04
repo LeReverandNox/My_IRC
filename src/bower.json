@@ -1,0 +1,11 @@
+{
+  "name": "my_irc",
+  "description": "A kick-ass IRC server/client in NodeJS with Socket.io",
+  "main": "app.js",
+  "authors": [
+    "laidet_r"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/LeReverandNox/My_IRC",
+  "private": true
+}
