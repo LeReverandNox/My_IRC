@@ -10,6 +10,24 @@ const ressourcesRoutes = [
         handler: function (request, reply) {
             reply.view("index");
         }
+    },
+    {
+        method: "GET",
+        path: "/css/{file*}",
+        handler: {
+            directory: {
+                path: "public/css"
+            }
+        }
+    },
+    {
+        method: "GET",
+        path: "/js/{file*}",
+        handler: {
+            directory: {
+                path: "public/js"
+            }
+        }
     }
 ];
 
