@@ -5,10 +5,10 @@
 
 "use strict";
 const Hapi = require("hapi");
+const ejs = require("ejs");
 const config = require("./config");
 const plugins = require("./plugins");
 const routes = require("./routes");
-
 const server = new Hapi.Server({
     connections: {
         routes: {
@@ -28,6 +28,12 @@ server.register(plugins, function (err) {
     if (err) {
         throw err;
     }
+
+    server.views({
+        engines: {ejs},
+        relativeTo: __dirname,
+        path: "views"
+    });
 
     server.route(routes);
 
