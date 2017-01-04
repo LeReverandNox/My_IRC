@@ -13,6 +13,9 @@ const server = new Hapi.Server({
     connections: {
         routes: {
             cors: true
+        },
+        router: {
+            stripTrailingSlash: true
         }
     }
 });
