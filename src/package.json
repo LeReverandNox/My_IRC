@@ -10,7 +10,11 @@
   "author": "laidet_r",
   "license": "ISC",
   "dependencies": {
+    "ejs": "^2.5.5",
     "forever": "^0.15.3",
-    "nodemon": "^1.11.0"
+    "hapi": "^16.1.0",
+    "inert": "^4.1.0",
+    "nodemon": "^1.11.0",
+    "vision": "^4.1.1"
   }
 }
