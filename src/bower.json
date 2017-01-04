@@ -7,5 +7,8 @@
   ],
   "license": "ISC",
   "homepage": "https://github.com/LeReverandNox/My_IRC",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "angular": "^1.6.1"
+  }
 }
