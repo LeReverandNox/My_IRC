@@ -8,7 +8,8 @@
         "ngMaterial",
         "my_irc.controllers",
         "my_irc.services",
-        "my_irc.directives"
+        "my_irc.directives",
+        "my_irc.filters"
     ]);
 
 }());
