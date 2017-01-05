@@ -5,7 +5,8 @@
     "use strict";
 
     var my_irc = angular.module("my_irc", [
-        "ngMaterial"
+        "ngMaterial",
+        "my_irc.controllers"
     ]);
 
 }());
