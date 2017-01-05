@@ -9,6 +9,7 @@
   "homepage": "https://github.com/LeReverandNox/My_IRC",
   "private": true,
   "dependencies": {
-    "angular": "^1.6.1"
+    "angular": "^1.6.1",
+    "angular-material": "^1.1.1"
   }
 }
