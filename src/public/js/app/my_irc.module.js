@@ -5,7 +5,8 @@
     "use strict";
 
     angular.module("my_irc", [
-        "ngMaterial"
+        "ngMaterial",
+        "ui.router"
     ]);
 
 }());
