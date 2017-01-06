@@ -28,6 +28,15 @@ const ressourcesRoutes = [
                 path: "public/js"
             }
         }
+    },
+    {
+        method: "GET",
+        path: "/partials/{file*}",
+        handler: {
+            directory: {
+                path: "views/partials"
+            }
+        }
     }
 ];
 
