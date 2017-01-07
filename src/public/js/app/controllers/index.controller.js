@@ -9,6 +9,8 @@
         .controller("Index", IndexController);
 
     function IndexController() {
-        console.log("Bienvenue dans IndexController");
+        var I = this;
+
+        I.title = "My_IRC";
     }
 }());
