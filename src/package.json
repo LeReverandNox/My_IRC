@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "forever -c 'nodemon --exitcrash' app.js"
+    "start": "forever -c 'nodemon -e js,ejs --exitcrash' app.js"
   },
   "author": "laidet_r",
   "license": "ISC",
