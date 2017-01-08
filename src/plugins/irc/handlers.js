@@ -8,6 +8,9 @@ var handlers = function (server, ircService) {
         handleNewUser: function (socket) {
             console.log("Here's a new connection");
             return socket.emit("handshake", `Welcome to you sir, to My_IRC ! Feel free to join a channel (/help)`);
+        },
+        disconnect: function (socket) {
+            console.log("Bye bye !");
         }
     };
 };

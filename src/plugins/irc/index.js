@@ -14,6 +14,8 @@ exports.register = function (server, options, next) {
 
     function connectionHandler(socket) {
         handlers.handleNewUser(socket);
+
+        socket.on("disconnect", handlers.disconnect);
     }
 
     next();
