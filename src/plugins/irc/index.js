@@ -10,7 +10,8 @@ exports.register = function (server, options, next) {
 
     function connectionHandler(socket) {
         console.log("Here's a new connection");
-        socket.emit("welcome", "Welcome you sir !");
+
+        socket.emit("handshake", `Welcome to you sir, to My_IRC ! Feel free to join a channel (/help)`);
     }
 
     next();
