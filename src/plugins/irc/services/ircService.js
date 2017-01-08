@@ -13,6 +13,9 @@ var ircService = function (server) {
             server.irc.channels = {};
 
             return this;
+        },
+        addUser: function (nickname, socket) {
+            server.irc.users[nickname] = socket;
         }
     };
 };
