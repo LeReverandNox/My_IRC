@@ -12,7 +12,7 @@ var ircService = function (server) {
             server.irc.users = {};
             server.irc.channels = {};
 
-            return server;
+            return this;
         }
     };
 };

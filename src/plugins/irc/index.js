@@ -5,10 +5,8 @@
 
 exports.register = function (server, options, next) {
     var io = require('socket.io')(server.listener);
-    var ircService = require("./services/ircService")(server);
+    var ircService = require("./services/ircService")(server).init();
     var handlers = require("./handlers")(server, ircService);
-
-    ircService.init();
 
     io.on("connection", connectionHandler);
 
