@@ -6,7 +6,8 @@
 
     angular.module("my_irc", [
         "ngMaterial",
-        "ui.router"
+        "ui.router",
+        "btford.socket-io"
     ]);
 
 }());
