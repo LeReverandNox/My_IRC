@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>My_IRC</title>
 
+    <base href="/">
+
     <!-- LIB -->
     <!-- Angular -->
     <!--<script src="js/lib/angular/angular.min.js"></script>-->
@@ -16,19 +18,25 @@
     <script src="js/lib/angular-messages/angular-messages.min.js"></script>
     <script src="js/lib/angular-material/angular-material.min.js"></script>
 
+    <!--Angular UI Router-->
+    <script src="js/lib/angular-ui-router/release/angular-ui-router.min.js"></script>
 
     <!-- STYLE -->
     <!--Angular Material CSS Sheet-->
     <link rel="stylesheet" href="js/lib/angular-material/angular-material.css">
+    <!--Own CSS Sheet-->
+    <link rel="stylesheet" href="css/style.css">
 
     <!-- MY_IRC -->
-    <script src="js/controllers.js"></script>
-    <script src="js/directives.js"></script>
-    <script src="js/filters.js"></script>
-    <script src="js/services.js"></script>
-    <script src="js/my_irc.js"></script>
+    <!--Module and configs -->
+    <script src="js/app/my_irc.module.js"></script>
+    <script src="js/app/my_irc.route.js"></script>
+    <script src="js/app/config/material.config.js"></script>
+
+    <!--Controllers-->
+    <script src="js/app/controllers/index.controller.js"></script>
 </head>
 <body ng-app="my_irc">
-
+    <ui-view />
 </body>
 </html>
