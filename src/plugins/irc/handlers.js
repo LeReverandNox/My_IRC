@@ -3,11 +3,20 @@
 
 "use strict";
 
+var tools = require("./lib/tools");
+
 var handlers = function (server, ircService) {
     return {
         handleNewUser: function (socket) {
             console.log("Here's a new connection");
-            return socket.emit("handshake", `Welcome to you sir, to My_IRC ! Feel free to join a channel (/help)`);
+
+            var nickname = tools.generateNickname();
+            ircService.addUser(nickname, socket);
+
+            return socket.emit("handshake", {
+                message: `Welcome to you sir ${nickname}, to My_IRC ! Feel free to join a channel (/help)`,
+                nickname: nickname
+            });
         },
         disconnect: function (socket) {
             console.log("Bye bye !");
