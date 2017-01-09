@@ -10,12 +10,17 @@ var handlers = function (server, ircService) {
         handleNewUser: function (socket) {
             console.log("Here's a new connection");
 
-            var nickname = tools.generateNickname();
-            ircService.addUser(nickname, socket);
+            var baseNickname = tools.generateNickname();
+            var nickname = baseNickname + tools.generateHash();
+            while (ircService.isNicknameTaken(nickname)) {
+                nickname = baseNickname + tools.generateHash();
+            }
+
+            var user = ircService.addUser(nickname, socket);
 
             return socket.emit("handshake", {
-                message: `Welcome to you sir ${nickname}, to My_IRC ! Feel free to join a channel (/help)`,
-                nickname: nickname
+                message: `Welcome to you sir ${user.nickname}, to My_IRC ! Feel free to join a channel (/help)`,
+                nickname: user.nickname
             });
         },
         disconnect: function () {

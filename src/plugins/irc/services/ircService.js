@@ -3,6 +3,8 @@
 
 "use strict";
 
+var tools = require("../lib/tools");
+
 var ircService = function (server) {
     return {
         init: function () {
@@ -20,6 +22,7 @@ var ircService = function (server) {
                 socketId: socket.id
             };
             server.irc.users.push(user);
+            return user;
         },
         removeUser: function (socket) {
             var index = this.getUserBySocketId(socket.id);
@@ -36,6 +39,12 @@ var ircService = function (server) {
                 return user.socketId === socketId;
             });
             return index;
+        },
+        isNicknameTaken: function (nickname) {
+            function checkNicknames (users) {
+                return users.nickname === nickname;
+            }
+            return server.irc.users.filter(checkNicknames).length > 0 ? true : false;
         }
     };
 };
