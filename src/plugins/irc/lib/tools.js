@@ -3,8 +3,14 @@
 
 "use strict";
 
+var Chance = require("chance");
+var chance = new Chance();
+
 var tools = {
-    generateNickname: require("./nicknameGenerator")
+    generateNickname: require("./nicknameGenerator"),
+    generateHash: function () {
+        return "#" + chance.zip();
+    }
 };
 
 module.exports = tools;
