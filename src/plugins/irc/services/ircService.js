@@ -9,13 +9,23 @@ var ircService = function (server) {
             console.log("On initialise le serveur IRC");
 
             server.irc = {};
-            server.irc.users = {};
-            server.irc.channels = {};
+            server.irc.users = [];
+            server.irc.channels = [];
 
             return this;
         },
         addUser: function (nickname, socket) {
-            server.irc.users[nickname] = socket;
+            var user = {
+                nickname: nickname,
+                socketId: socket.id
+            };
+            server.irc.users.push(user);
+        },
+        removeUser: function (socket) {
+            var index = server.irc.users.findIndex(function (user) {
+                return user.socketId === socket.id;
+            });
+            server.irc.users.splice(index, 1);
         }
     };
 };
