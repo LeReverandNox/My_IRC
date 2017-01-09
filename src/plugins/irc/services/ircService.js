@@ -22,10 +22,20 @@ var ircService = function (server) {
             server.irc.users.push(user);
         },
         removeUser: function (socket) {
-            var index = server.irc.users.findIndex(function (user) {
-                return user.socketId === socket.id;
-            });
+            var index = this.getUserBySocketId(socket.id);
             server.irc.users.splice(index, 1);
+        },
+        getUserBySocketId: function (socketId) {
+            var user = server.irc.users.filter(function (user) {
+                return user.socketId === socketId;
+            })[0];
+            return user;
+        },
+        getUserIndexBySocketId: function (socketId) {
+            var index = server.irc.users.findIndex(function (user) {
+                return user.socketId === socketId;
+            });
+            return index;
         }
     };
 };
