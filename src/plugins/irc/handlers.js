@@ -18,8 +18,9 @@ var handlers = function (server, ircService) {
                 nickname: nickname
             });
         },
-        disconnect: function (socket) {
+        disconnect: function () {
             console.log("Bye bye !");
+            ircService.removeUser(this);
         }
     };
 };
