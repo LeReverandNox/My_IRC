@@ -5,16 +5,18 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "forever -c 'nodemon -e js,ejs --exitcrash' app.js"
+    "start": "forever --minUptime 1 -c 'nodemon -e js,ejs --exitcrash' app.js"
   },
   "author": "laidet_r",
   "license": "ISC",
   "dependencies": {
+    "chance": "^1.0.4",
     "ejs": "^2.5.5",
     "forever": "^0.15.3",
     "hapi": "^16.1.0",
     "inert": "^4.1.0",
     "nodemon": "^1.11.0",
+    "socket.io": "^1.7.2",
     "vision": "^4.1.1"
   }
 }
