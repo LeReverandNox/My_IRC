@@ -23,6 +23,22 @@ var handlers = function (server, ircService) {
                 nickname: user.nickname
             });
         },
+        joinChannel: function (channel, cb) {
+            var socket = this;
+            var user = ircService.getUserBySocketId(socket.id);
+
+            ircService.joinChannel(user, channel, function (err, msg) {
+                if (err) {
+                    return cb(msg);
+                }
+
+                socket.broadcast.to(channel).emit("userJoinChannel", {
+                    nickname: "SERVER",
+                    message: `${user.nickname} join the channel [${channel}]`
+                });
+                return cb(`You join the channel ${channel}`);
+            });
+        },
         disconnect: function () {
             console.log("Bye bye !");
             ircService.removeUser(this);
