@@ -33,15 +33,29 @@ var ircService = function (server) {
             if (user.socket.rooms[channel]) {
                 return cb(true, "You already are a member of this channel.");
             }
+            if (!this.channelExist(channel)) {
+                this.addChannel(channel).users.push(user);
+            }
 
             user.socket.join(channel);
             return cb(false, null);
+        },
+        addChannel: function (channel) {
+            var channelObj = {
+                name: channel,
+                users: []
+            };
+            server.irc.channels[channel] = channelObj;
+            return channelObj;
         },
         getUserBySocketId: function (socketId) {
             var user = server.irc.users.filter(function (user) {
                 return user.socketId === socketId;
             })[0];
             return user;
+        },
+        channelExist: function (channel) {
+            return server.irc.channels[channel] ? true : false;
         },
         getUserIndexBySocketId: function (socketId) {
             var index = server.irc.users.findIndex(function (user) {
