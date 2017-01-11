@@ -13,6 +13,8 @@ exports.register = function (server, options, next) {
     function connectionHandler(socket) {
         handlers.handleNewUser(socket);
 
+        socket.on("joinChannel", handlers.joinChannel);
+
         socket.on("disconnect", handlers.disconnect);
     }
 
