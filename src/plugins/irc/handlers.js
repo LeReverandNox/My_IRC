@@ -40,8 +40,19 @@ var handlers = function (server, ircService) {
             });
         },
         disconnect: function () {
-            console.log("Bye bye !");
-            ircService.removeUser(this);
+            var socket = this;
+            var user = ircService.getUserBySocketId(socket.id);
+
+            user.channels.forEach(function (channel) {
+                ircService.leaveChannel(user, channel, function (err, msg) {
+                    socket.broadcast.to(channel).emit("userLeftChannel", {
+                        nickname: "SERVER",
+                        message: `${user.nickname} has left the channel [${channel}]`
+                    });
+                });
+            });
+
+            ircService.removeUser(user);
         }
     };
 };
