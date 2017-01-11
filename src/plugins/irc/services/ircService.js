@@ -19,7 +19,8 @@ var ircService = function (server) {
         addUser: function (nickname, socket) {
             var user = {
                 nickname: nickname,
-                socketId: socket.id
+                socketId: socket.id,
+                socket: socket
             };
             server.irc.users.push(user);
             return user;
@@ -27,6 +28,14 @@ var ircService = function (server) {
         removeUser: function (socket) {
             var index = this.getUserBySocketId(socket.id);
             server.irc.users.splice(index, 1);
+        },
+        joinChannel: function (user, channel, cb) {
+            if (user.socket.rooms[channel]) {
+                return cb(true, "You already are a member of this channel.");
+            }
+
+            user.socket.join(channel);
+            return cb(false, null);
         },
         getUserBySocketId: function (socketId) {
             var user = server.irc.users.filter(function (user) {
