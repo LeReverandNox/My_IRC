@@ -69,6 +69,9 @@ var ircService = function (server, io) {
 
             return users;
         },
+        listChannels: function () {
+            return server.irc.channels;
+        },
         changeUserNickname: function (user, newNickname, cb) {
             var nickname = newNickname;
             var msg = null;
