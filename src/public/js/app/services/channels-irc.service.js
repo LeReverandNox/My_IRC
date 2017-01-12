@@ -12,11 +12,15 @@
 
     function channelsIrcService(socketService, $rootScope) {
         var service = {
-            joinChannel: joinChannel
+            joinChannel: joinChannel,
+            leaveChannel: leaveChannel
         };
 
         function joinChannel(channel, cb) {
             socketService.emit("joinChannel", channel, cb);
+        }
+        function leaveChannel(channel, cb) {
+            socketService.emit("leaveChannel", channel, cb);
         }
 
         socketService.on("userJoinChannel", function (data) {
