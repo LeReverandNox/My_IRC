@@ -74,12 +74,22 @@ var handlers = function (server, ircService) {
                 data: users
             });
         },
-        listChannels: function (cb) {
+        listChannels: function (string, cb) {
             var channels = ircService.listChannels();
+            var message = `Here's the channels list`;
+
+            string = string.trim() || "";
+            if (string) {
+                message = message + ` containing ${string}`;
+                channels = channels.filter(function (channel) {
+                    return channel.includes(string);
+                });
+            }
+
             return cb({
-                message: `Here's the channels list`,
+                message: message,
                 data: channels
-            })
+            });
         },
         changeNickname: function (newNickname, cb) {
             var socket = this;

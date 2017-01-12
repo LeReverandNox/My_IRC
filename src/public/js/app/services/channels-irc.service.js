@@ -28,8 +28,8 @@
         function listChannelUsers(channel, cb) {
             socketService.emit("listChannelUsers", channel, cb);
         }
-        function listChannels(cb) {
-            socketService.emit("listChannels", cb);
+        function listChannels(string, cb) {
+            socketService.emit("listChannels", string, cb);
         }
 
         socketService.on("userJoinChannel", function (data) {
