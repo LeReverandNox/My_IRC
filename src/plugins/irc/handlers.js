@@ -64,6 +64,9 @@ var handlers = function (server, ircService, io) {
             });
         },
         listChannelUsers: function (channel, cb) {
+            var socket = this;
+            var user = ircService.getUserBySocketId(socket.id);
+
             if (!ircService.channelExist(channel)) {
                 return cb({
                     message: "This channel doesn't exist !",
@@ -73,6 +76,7 @@ var handlers = function (server, ircService, io) {
             }
 
             var users = ircService.listChannelUsers(channel);
+            console.log(`[${tools.datetime()}] - ${user.nickname} ask for channel [${channel}] users list!`);
             return cb({
                 message: `Here the user list for channel [${channel}]`,
                 data: users,
@@ -80,6 +84,9 @@ var handlers = function (server, ircService, io) {
             });
         },
         listChannels: function (string, cb) {
+            var socket = this;
+            var user = ircService.getUserBySocketId(socket.id);
+
             var channels = ircService.listChannels();
             var message = `Here's the channels list`;
 
@@ -91,6 +98,7 @@ var handlers = function (server, ircService, io) {
                 });
             }
 
+            console.log(`[${tools.datetime()}] - ${user.nickname} ask for channels list!`);
             return cb({
                 message: message,
                 data: channels,
@@ -101,7 +109,6 @@ var handlers = function (server, ircService, io) {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
             var oldNickname = user.nickname;
-            console.log(`[${tools.datetime()}] - L'user ${user.nickname} veut changer son nickname en ${newNickname}`);
 
             newNickname = newNickname.trim() || "";
             if (!newNickname) {
@@ -144,6 +151,7 @@ var handlers = function (server, ircService, io) {
                 message: content,
                 timestamp: tools.now()
             });
+            console.log(`[${tools.datetime()}] - ${fromUser.nickname} send a PM to ${toUser.nickname} !`);
             return cb({ message: `Your message was delivered to ${to}`, timestamp: tools.now() });
         },
         sendMessage: function (channel, content, cb) {
@@ -166,12 +174,12 @@ var handlers = function (server, ircService, io) {
                 channel: channel,
                 timestamp: tools.now()
             });
+            console.log(`[${tools.datetime()}] - ${user.nickname} send a message to channel [${channel}] !`);
             return cb({ message: `Your message was delivered`, timestamp: tools.now() });
         },
         disconnect: function () {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
-            console.log(`[${tools.datetime()}] - ${user.nickname} left the server !`);
 
             user.channels.forEach(function (channel) {
                 ircService.leaveChannel(user, channel, function (err, msg) {
@@ -184,8 +192,8 @@ var handlers = function (server, ircService, io) {
                 });
             });
 
-            console.log(`[${tools.datetime()}] - ${user.nickname} left the server !`);
-            ircService.removeUser(user);
+            console.log(`[${tools.datetime()}] - ${user.nickname} has left the server !`);
+            return ircService.removeUser(user);
         }
     };
 };
