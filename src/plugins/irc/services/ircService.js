@@ -5,7 +5,7 @@
 
 var tools = require("../lib/tools");
 
-var ircService = function (server) {
+var ircService = function (server, io) {
     return {
         init: function () {
             console.log("On initialise le serveur IRC");
@@ -35,7 +35,7 @@ var ircService = function (server) {
                 return cb(true, "You already are a member of this channel.");
             }
             if (!this.channelExist(channel)) {
-                this.addChannel(channel).users.push(user);
+                server.irc.channels.push(channel);
             }
 
             user.channels.push(channel);
@@ -43,6 +43,9 @@ var ircService = function (server) {
             return cb(false, null);
         },
         leaveChannel: function (user, channel, cb) {
+            if (this.isChannelEmpty(channel)) {
+                server.irc.channels.splice(server.irc.channels.indexOf(channel), 1);
+            }
             if (!user.socket.rooms[channel]) {
                 return cb(true, "You are not a member of this channel.");
             }
@@ -52,14 +55,6 @@ var ircService = function (server) {
 
             return cb(false, null);
         },
-        addChannel: function (channel) {
-            var channelObj = {
-                name: channel,
-                users: []
-            };
-            server.irc.channels[channel] = channelObj;
-            return channelObj;
-        },
         getUserBySocketId: function (socketId) {
             var user = server.irc.users.filter(function (user) {
                 return user.socketId === socketId;
@@ -68,6 +63,9 @@ var ircService = function (server) {
         },
         channelExist: function (channel) {
             return server.irc.channels[channel] ? true : false;
+        },
+        isChannelEmpty: function (channel) {
+            return io.sockets.adapter.rooms[channel] ? false: true;
         },
         getUserIndexBySocketId: function (socketId) {
             var index = server.irc.users.findIndex(function (user) {
