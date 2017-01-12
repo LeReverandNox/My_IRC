@@ -11,7 +11,18 @@
     indexIrcService.$inject = ["socketService", "$rootScope"];
 
     function indexIrcService(socketService, $rootScope) {
-        var service = {};
+        var service = {
+            changeNickname: changeNickname
+        };
+
+        function changeNickname(nickname, cb) {
+            socketService.emit("changeNickname", nickname, cb);
+        }
+
+        socketService.on("hasChangeNickname", function (data) {
+            $rootScope.$emit("hasChangeNickname", data);
+
+        });
 
         socketService.on("handshake", function (data) {
             $rootScope.$emit("handshake", data);
