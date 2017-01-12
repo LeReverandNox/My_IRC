@@ -55,6 +55,16 @@ var ircService = function (server, io) {
 
             return cb(false, null);
         },
+        listChannelUsers: function (channel) {
+            var self = this;
+            var sockets = io.sockets.adapter.rooms[channel].sockets;
+            var users = Object.keys(sockets).map(function (socketId) {
+                return self.getUserBySocketId(socketId).nickname;
+
+            });
+
+            return users;
+        },
         changeUserNickname: function (user, newNickname, cb) {
             var nickname = newNickname;
             var msg = null;
@@ -73,7 +83,7 @@ var ircService = function (server, io) {
             return user;
         },
         channelExist: function (channel) {
-            return server.irc.channels[channel] ? true : false;
+            return server.irc.channels[server.irc.channels.indexOf(channel)] ? true : false;
         },
         isChannelEmpty: function (channel) {
             return io.sockets.adapter.rooms[channel] ? false: true;
