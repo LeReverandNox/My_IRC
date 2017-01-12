@@ -30,6 +30,7 @@ exports.register = function (server, options, next) {
          * Messages
          */
         socket.on("sendPrivateMessage", handlers.sendPrivateMessage);
+        socket.on("sendMessage", handlers.sendMessage);
 
         socket.on("disconnect", handlers.disconnect);
     }
