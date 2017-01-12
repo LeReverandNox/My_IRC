@@ -101,6 +101,12 @@ var ircService = function (server, io) {
             });
             return index;
         },
+        getUserByNickname: function (nickname) {
+            var user = server.irc.users.filter(function (user) {
+                return user.nickname === nickname;
+            })[0];
+            return user;
+        },
         isNicknameTaken: function (nickname) {
             function checkNicknames (users) {
                 return users.nickname === nickname;
