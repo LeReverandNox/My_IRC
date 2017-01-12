@@ -55,6 +55,31 @@ var handlers = function (server, ircService) {
                 return cb(`You left the channel ${channel}`);
             });
         },
+        changeNickname: function (newNickname, cb) {
+            var socket = this;
+            var user = ircService.getUserBySocketId(socket.id);
+            var oldNickname = user.nickname;
+            console.log(`L'user ${user.nickname} veut changer son nickname en ${newNickname}`);
+
+            if (newNickname.trim().length < 1) {
+                return cb("This nickname is too short !");
+            }
+
+            ircService.changeUserNickname(user, newNickname, function (err, msg) {
+                if (err) {
+                    return cb(msg);
+                }
+                console.log(`${oldNickname} change is nickname to ${user.nickname} !`);
+
+                user.channels.forEach(function (channel) {
+                    socket.broadcast.to(channel).emit("hasChangeNickname", {
+                        nickname: "SERVER",
+                        message: `${oldNickname} change is nickname to ${user.nickname} !`
+                    });
+                });
+                return cb(`You change your nickname from ${oldNickname} to ${user.nickname}`);
+            });
+        },
         disconnect: function () {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
