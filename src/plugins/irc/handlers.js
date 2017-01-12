@@ -8,8 +8,6 @@ var tools = require("./lib/tools");
 var handlers = function (server, ircService) {
     return {
         handleNewUser: function (socket) {
-            console.log("Here's a new connection");
-
             var baseNickname = tools.generateNickname();
             var nickname = baseNickname + tools.generateHash();
             while (ircService.isNicknameTaken(nickname)) {
@@ -17,7 +15,7 @@ var handlers = function (server, ircService) {
             }
 
             var user = ircService.addUser(nickname, socket);
-
+            console.log(`${user.nickname} join the server !`);
             return socket.emit("handshake", {
                 message: `Welcome to you sir ${user.nickname}, to My_IRC ! Feel free to join a channel (/help)`,
                 nickname: user.nickname
@@ -31,6 +29,7 @@ var handlers = function (server, ircService) {
                 if (err) {
                     return cb(msg);
                 }
+                console.log(`${user.nickname} join the channel ${channel} !`);
 
                 socket.broadcast.to(channel).emit("userJoinChannel", {
                     nickname: "SERVER",
@@ -59,9 +58,11 @@ var handlers = function (server, ircService) {
         disconnect: function () {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
+            console.log(`${user.nickname} left the server !`);
 
             user.channels.forEach(function (channel) {
                 ircService.leaveChannel(user, channel, function (err, msg) {
+                    console.log(`${user.nickname} left the channel ${channel} !`);
                     socket.broadcast.to(channel).emit("userLeftChannel", {
                         nickname: "SERVER",
                         message: `${user.nickname} has left the channel [${channel}]`
@@ -69,6 +70,7 @@ var handlers = function (server, ircService) {
                 });
             });
 
+            console.log(`${user.nickname} left the server !`);
             ircService.removeUser(user);
         }
     };
