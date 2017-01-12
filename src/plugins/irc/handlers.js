@@ -25,6 +25,11 @@ var handlers = function (server, ircService) {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
 
+            channel = channel.trim() || "";
+            if (!channel) {
+                return cb("This channel name is too short !");
+            }
+
             ircService.joinChannel(user, channel, function (err, msg) {
                 if (err) {
                     return cb(msg);
@@ -75,7 +80,8 @@ var handlers = function (server, ircService) {
             var oldNickname = user.nickname;
             console.log(`L'user ${user.nickname} veut changer son nickname en ${newNickname}`);
 
-            if (newNickname.trim().length < 1) {
+            newNickname = newNickname.trim() || "";
+            if (!newNickname) {
                 return cb("This nickname is too short !");
             }
 
