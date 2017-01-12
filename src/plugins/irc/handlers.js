@@ -39,6 +39,23 @@ var handlers = function (server, ircService) {
                 return cb(`You join the channel ${channel}`);
             });
         },
+        leaveChannel: function (channel, cb) {
+            var socket = this;
+            var user = ircService.getUserBySocketId(socket.id);
+
+            ircService.leaveChannel(user, channel, function (err, msg) {
+                if (err) {
+                    return cb(msg);
+                }
+                console.log(`${user.nickname} left the channel ${channel} !`);
+
+                socket.broadcast.to(channel).emit("userLeftChannel", {
+                    nickname: "SERVER",
+                    message: `${user.nickname} has left the channel [${channel}]`
+                });
+                return cb(`You left the channel ${channel}`);
+            });
+        },
         disconnect: function () {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
