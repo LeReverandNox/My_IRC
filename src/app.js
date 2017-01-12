@@ -9,6 +9,7 @@ const ejs = require("ejs");
 const config = require("./config");
 const plugins = require("./plugins");
 const routes = require("./routes");
+const tools = require("./plugins/irc/lib/tools");
 const server = new Hapi.Server({
     connections: {
         routes: {
@@ -41,6 +42,6 @@ server.register(plugins, function (err) {
         if (err) {
             throw err;
         }
-        console.log("The IRC app is now running on port " + server.info.port + " :)");
+        console.log(`[${tools.datetime()}] - The IRC app is now running on port ${server.info.port}`);
     });
 });

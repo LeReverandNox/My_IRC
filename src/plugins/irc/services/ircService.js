@@ -8,7 +8,7 @@ var tools = require("../lib/tools");
 var ircService = function (server, io) {
     return {
         init: function () {
-            console.log("On initialise le serveur IRC");
+            console.log(`[${tools.datetime()}] - On initialise le serveur IRC`);
 
             server.irc = {};
             server.irc.users = [];
@@ -108,7 +108,7 @@ var ircService = function (server, io) {
             return user;
         },
         isNicknameTaken: function (nickname) {
-            function checkNicknames (users) {
+            function checkNicknames(users) {
                 return users.nickname === nickname;
             }
             return server.irc.users.filter(checkNicknames).length > 0 ? true : false;
