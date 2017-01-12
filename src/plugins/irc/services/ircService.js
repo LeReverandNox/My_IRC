@@ -43,8 +43,8 @@ var ircService = function (server, io) {
             return cb(false, null);
         },
         leaveChannel: function (user, channel, cb) {
-            if (this.isChannelEmpty(channel)) {
-                server.irc.channels.splice(server.irc.channels.indexOf(channel), 1);
+            if (!this.channelExist(channel)) {
+                return cb(true, "This channel doesn't exist.");
             }
             if (!user.socket.rooms[channel]) {
                 return cb(true, "You are not a member of this channel.");
@@ -52,6 +52,10 @@ var ircService = function (server, io) {
 
             user.channels.splice(user.channels.indexOf(channel), 1);
             user.socket.leave(channel);
+
+            if (this.isChannelEmpty(channel)) {
+                server.irc.channels.splice(server.irc.channels.indexOf(channel), 1);
+            }
 
             return cb(false, null);
         },
