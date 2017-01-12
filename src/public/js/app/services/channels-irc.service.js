@@ -23,6 +23,10 @@
             $rootScope.$emit("userJoinChannel", data);
         });
 
+        socketService.on("userLeftChannel", function (data) {
+            $rootScope.$emit("userLeftChannel", data);
+        });
+
         return service;
     }
 } ());
