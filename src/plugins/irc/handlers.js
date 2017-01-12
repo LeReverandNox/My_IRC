@@ -138,6 +138,27 @@ var handlers = function (server, ircService, io) {
             });
             return cb(`Your message was delivered to ${to}`);
         },
+        sendMessage: function (channel, content, cb) {
+            var socket = this;
+            var user = ircService.getUserBySocketId(socket.id);
+
+            channel = channel.trim() || "";
+            if (!ircService.channelExist(channel)) {
+                return cb(`The channel ${channel} doesn't exist.`);
+            }
+
+            content = content.trim() || "";
+            if (!content) {
+                return cb(`You can't send an empty message`);
+            }
+
+            io.to(channel).emit("receiveMessage", {
+                nickname: user.nickname,
+                message: content,
+                channel: channel
+            });
+            return cb(`Your message was delivered`);
+        },
         disconnect: function () {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
