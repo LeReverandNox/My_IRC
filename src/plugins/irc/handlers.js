@@ -74,6 +74,13 @@ var handlers = function (server, ircService) {
                 data: users
             });
         },
+        listChannels: function (cb) {
+            var channels = ircService.listChannels();
+            return cb({
+                message: `Here's the channels list`,
+                data: channels
+            })
+        },
         changeNickname: function (newNickname, cb) {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
