@@ -55,6 +55,20 @@ var handlers = function (server, ircService) {
                 return cb(`You left the channel ${channel}`);
             });
         },
+        listChannelUsers: function (channel, cb) {
+            if (!ircService.channelExist(channel)) {
+                return cb({
+                    message: "This channel doesn't exist !",
+                    data: []
+                });
+            }
+
+            var users = ircService.listChannelUsers(channel);
+            return cb({
+                message: `Here the user list for channel [${channel}]`,
+                data: users
+            });
+        },
         changeNickname: function (newNickname, cb) {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
