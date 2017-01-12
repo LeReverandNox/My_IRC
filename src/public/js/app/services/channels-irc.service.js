@@ -14,7 +14,8 @@
         var service = {
             joinChannel: joinChannel,
             leaveChannel: leaveChannel,
-            listChannelUsers: listChannelUsers
+            listChannelUsers: listChannelUsers,
+            listChannels: listChannels
         };
 
         function joinChannel(channel, cb) {
@@ -26,6 +27,9 @@
 
         function listChannelUsers(channel, cb) {
             socketService.emit("listChannelUsers", channel, cb);
+        }
+        function listChannels(cb) {
+            socketService.emit("listChannels", cb);
         }
 
         socketService.on("userJoinChannel", function (data) {
