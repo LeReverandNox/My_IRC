@@ -55,6 +55,17 @@ var ircService = function (server, io) {
 
             return cb(false, null);
         },
+        changeUserNickname: function (user, newNickname, cb) {
+            var nickname = newNickname;
+            var msg = null;
+            while (this.isNicknameTaken(nickname)) {
+                nickname = newNickname + tools.generateHash();
+                msg = `This nickname was already taken, so we renamed you ${nickname}`;
+            }
+
+            user.nickname = nickname;
+            return cb(false, msg);
+        },
         getUserBySocketId: function (socketId) {
             var user = server.irc.users.filter(function (user) {
                 return user.socketId === socketId;
