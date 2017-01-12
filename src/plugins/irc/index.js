@@ -16,7 +16,7 @@ exports.register = function (server, options, next) {
         socket.on("joinChannel", handlers.joinChannel);
         socket.on("leaveChannel", handlers.leaveChannel);
         socket.on("listChannelUsers", handlers.listChannelUsers);
-
+        socket.on("listChannels", handlers.listChannels);
         socket.on("changeNickname", handlers.changeNickname);
 
         socket.on("disconnect", handlers.disconnect);
