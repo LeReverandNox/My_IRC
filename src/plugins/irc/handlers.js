@@ -5,7 +5,7 @@
 
 var tools = require("./lib/tools");
 
-var handlers = function (server, ircService) {
+var handlers = function (server, ircService, io) {
     return {
         handleNewUser: function (socket) {
             var baseNickname = tools.generateNickname();
@@ -116,6 +116,27 @@ var handlers = function (server, ircService) {
                 });
                 return cb(`You change your nickname from ${oldNickname} to ${user.nickname}`);
             });
+        },
+        sendPrivateMessage: function (to, content, cb) {
+            var socket = this;
+            var fromUser = ircService.getUserBySocketId(socket.id);
+
+            to = to.trim() || "";
+            var toUser = ircService.getUserByNickname(to);
+            if (!toUser) {
+                return cb(`The user ${to} doesn't exist.`);
+            }
+
+            content = content.trim() || "";
+            if (!content) {
+                return cb(`You can't send an empty private-message`);
+            }
+
+            io.to(toUser.socket.id).emit('receivePrivateMessage', {
+                nickname: fromUser.nickname,
+                message: content
+            });
+            return cb(`Your message was delivered to ${to}`);
         },
         disconnect: function () {
             var socket = this;
