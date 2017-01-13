@@ -43,7 +43,7 @@ var ircService = function (server, io) {
             return cb(false, null);
         },
         leaveChannel: function (user, channel, cb) {
-            if (!user.socket.rooms[channel]) {
+            if (!this.isUserInChannel(user, channel)) {
                 return cb(true, "You are not a member of this channel.");
             }
             if (!this.channelExist(channel)) {
@@ -112,6 +112,9 @@ var ircService = function (server, io) {
                 return users.nickname === nickname;
             }
             return server.irc.users.filter(checkNicknames).length > 0 ? true : false;
+        },
+        isUserInChannel: function (user, channel) {
+            return user.socket.rooms[channel] ? true : false;
         }
     };
 };
