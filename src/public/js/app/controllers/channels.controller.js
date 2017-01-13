@@ -17,13 +17,15 @@
         C.title = "Channels";
         C.channels = I.channels;
 
-        $rootScope.$on("selfJoinChannel", function (e, channelName) {
-            var channel = I.addChannel(channelName);
+        $rootScope.$on("selfJoinChannel", function (e, data) {
+            var channel = I.addChannel(data.channelName);
             C.switchChannel(channel);
+            $rootScope.$emit("selfJoinChannelMessage", data);
         });
 
-        $rootScope.$on("selfLeaveChannel", function (e, channelName) {
-            var channel = I.removeChannel(channelName);
+        $rootScope.$on("selfLeaveChannel", function (e, data) {
+            var channel = I.removeChannel(data.channelName);
+            $rootScope.$emit("selfLeftChannelMessage", data);
             if (channel.active && C.channels.length > 0) {
                 C.switchChannel(C.channels[0]);
             } else {
