@@ -41,6 +41,10 @@
             $rootScope.$emit("userLeftChannel", data);
         });
 
+        socketService.on("updateUsersInChannel", function (data) {
+            $rootScope.$emit("updateUsersInChannel", data);
+        });
+
         return service;
     }
 } ());
