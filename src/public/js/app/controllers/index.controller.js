@@ -15,7 +15,10 @@
 
         I.title = "My_IRC";
         I.channels = [];
-        I.currChannel = null;
+        I.personnalChannel = {
+            messages: []
+        };
+        I.currChannel = I.personnalChannel;
 
         I.addChannel = function (channelName) {
             var channel = {
@@ -38,11 +41,12 @@
 
         I.changeCurrentChannel = function (channel) {
             if (!channel) {
-                I.currChannel = null;
+                I.currChannel = I.personnalChannel;
+                return null;
             } else {
                 I.currChannel = channel;
+                return I.currChannel;
             }
-            return I.currChannel;
         };
 
         I.getChannelByName = function (channelName) {
