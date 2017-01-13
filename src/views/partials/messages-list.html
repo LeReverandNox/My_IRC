@@ -3,8 +3,8 @@
     <md-subheader class="md-no-sticky">{{ M.title }}</md-subheader>
 
     <div ng-repeat="message in I.currChannel.messages">
-        <md-list-item class="disable-text-selection">
-            <p> {{ message }} </p>
+        <md-list-item>
+            <p class="angular-with-newlines"> {{ message }} </p>
         </md-list-item>
         <md-divider></md-divider>
     </div>
