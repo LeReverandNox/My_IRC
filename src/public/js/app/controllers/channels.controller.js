@@ -32,6 +32,8 @@
             var channel = C.channels[channelIndex];
 
             C.channels.splice(channelIndex, 1);
+            $rootScope.$emit("selfRemoveChannel", channelName);
+
             if (channel.active && C.channels.length > 0) {
                 C.switchChannel(C.channels[0]);
             } else {
@@ -42,11 +44,13 @@
         C.switchChannel = function (channel) {
             if (!channel) {
                 channelsIrcService.activeChannel = null;
+                $rootScope.$emit("selfSwitchChannel", null);
                 return false;
             }
             disableAllChannels();
             channel.active = true;
             channelsIrcService.activeChannel = channel.name;
+            $rootScope.$emit("selfSwitchChannel", channel.name);
         };
 
         function disableAllChannels() {
