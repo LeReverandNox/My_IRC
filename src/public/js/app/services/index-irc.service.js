@@ -21,7 +21,6 @@
 
         socketService.on("hasChangeNickname", function (data) {
             $rootScope.$emit("hasChangeNickname", data);
-
         });
 
         socketService.on("handshake", function (data) {
