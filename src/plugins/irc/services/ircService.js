@@ -43,11 +43,11 @@ var ircService = function (server, io) {
             return cb(false, null);
         },
         leaveChannel: function (user, channel, cb) {
-            if (!this.channelExist(channel)) {
-                return cb(true, "This channel doesn't exist.");
-            }
             if (!user.socket.rooms[channel]) {
                 return cb(true, "You are not a member of this channel.");
+            }
+            if (!this.channelExist(channel)) {
+                return cb(true, "This channel doesn't exist.");
             }
 
             user.channels.splice(user.channels.indexOf(channel), 1);
