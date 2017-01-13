@@ -32,8 +32,12 @@
         }
 
         function addMessage(message, channelName) {
+            if (channelName) {
             var channel = I.getChannelByName(channelName);
             channel.messages.push(message);
+            } else {
+                I.currChannel.messages.push(message);
+            }
         }
 
     }
