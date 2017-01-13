@@ -29,6 +29,9 @@
         $rootScope.$on("selfLeftChannelMessage", displayMessage);
         $rootScope.$on("selfChangeNickname", displayMessage);
         $rootScope.$on("listChannels", displayMessage);
+        $rootScope.$on("selfPrivateMessageSent", displayMessage);
+        $rootScope.$on("receivePrivateMessage", displayMessage);
+
         function displayMessage(e, data) {
             console.log("On va display ca", data);
             var formattedMessage = formatterService.format(data);
@@ -37,8 +40,8 @@
 
         function addMessage(message, channelName) {
             if (channelName) {
-            var channel = I.getChannelByName(channelName);
-            channel.messages.push(message);
+                var channel = I.getChannelByName(channelName);
+                channel.messages.push(message);
             } else {
                 I.currChannel.messages.push(message);
             }
