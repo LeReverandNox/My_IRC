@@ -84,6 +84,11 @@ var handlers = function (server, ircService, io) {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
 
+            if (!channel || channel.trim() === "") {
+                return cb({ error: true, nickname: "", message: `You must be in a channel to list users.`, timestamp: tools.now() });
+            }
+
+            channel = channel.trim();
             if (!ircService.channelExist(channel)) {
                 return cb({
                     error: true,
@@ -182,11 +187,11 @@ var handlers = function (server, ircService, io) {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
 
-            channel = channel.trim() || "";
-            if (!channel) {
+            if (!channel || channel.trim() === "") {
                 return cb({ error: true, nickname: "", message: `You must be in a channel to send a message.`, timestamp: tools.now() });
             }
 
+            channel = channel.trim();
             if (!ircService.channelExist(channel)) {
                 return cb({ error: true, nickname: "", message: `The channel ${channel} doesn't exist.`, timestamp: tools.now() });
             }
