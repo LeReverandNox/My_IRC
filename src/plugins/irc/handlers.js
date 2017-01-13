@@ -196,10 +196,10 @@ var handlers = function (server, ircService, io) {
                 return cb({ error: true, nickname: "", message: `The channel ${channel} doesn't exist.`, timestamp: tools.now() });
             }
 
-            content = content.trim() || "";
-            if (!content) {
+            if (!content || content.trim() === "") {
                 return cb({ error: true, nickname: "", message: `You can't send an empty message`, timestamp: tools.now() });
             }
+            content = content.trim();
 
             if (!ircService.isUserInChannel(user, channel)) {
                 return cb({ error: true, nickname: "", message: `You are not a member of this channel.`, timestamp: tools.now() });
