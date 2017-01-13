@@ -183,6 +183,10 @@ var handlers = function (server, ircService, io) {
             var user = ircService.getUserBySocketId(socket.id);
 
             channel = channel.trim() || "";
+            if (!channel) {
+                return cb({ error: true, nickname: "", message: `You must be in a channel to send a message.`, timestamp: tools.now() });
+            }
+
             if (!ircService.channelExist(channel)) {
                 return cb({ error: true, nickname: "", message: `The channel ${channel} doesn't exist.`, timestamp: tools.now() });
             }
@@ -190,6 +194,10 @@ var handlers = function (server, ircService, io) {
             content = content.trim() || "";
             if (!content) {
                 return cb({ error: true, nickname: "", message: `You can't send an empty message`, timestamp: tools.now() });
+            }
+
+            if (!ircService.isUserInChannel(user, channel)) {
+                return cb({ error: true, nickname: "", message: `You are not a member of this channel.`, timestamp: tools.now() });
             }
 
             io.to(channel).emit("receiveMessage", {
