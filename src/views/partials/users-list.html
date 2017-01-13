@@ -1,0 +1,13 @@
+<md-list ng-cloak>
+
+    <md-subheader class="md-no-sticky">{{ U.title }}</md-subheader>
+
+    <div ng-repeat="user in U.currChannel.users">
+        <md-list-item
+            class="disable-text-selection">
+            <p> {{ user }} </p>
+        </md-list-item>
+        <md-divider></md-divider>
+    </div>
+
+</md-list>
