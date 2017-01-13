@@ -12,7 +12,6 @@
 
     function channelsIrcService(socketService, $rootScope) {
         var service = {
-            activeChannel: null,
             joinChannel: joinChannel,
             leaveChannel: leaveChannel,
             listChannelUsers: listChannelUsers,
