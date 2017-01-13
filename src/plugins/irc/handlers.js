@@ -42,6 +42,15 @@ var handlers = function (server, ircService, io) {
                     message: `${user.nickname} join the channel [${channel}]`,
                     timestamp: tools.now()
                 });
+                io.to(channel).emit("updateUsersInChannel", {
+                    error: false,
+                    message: `Here the updated user list for channel [${channel}]`,
+                    data: {
+                        users: ircService.listChannelUsers(channel),
+                        channel: channel
+                    },
+                    timestamp: tools.now()
+                });
                 return cb({ error: false, message: `You join the channel ${channel}`, timestamp: tools.now() });
             });
         },
@@ -60,6 +69,17 @@ var handlers = function (server, ircService, io) {
                     message: `${user.nickname} has left the channel [${channel}]`,
                     timestamp: tools.now()
                 });
+                if (ircService.channelExist(channel)) {
+                    io.to(channel).emit("updateUsersInChannel", {
+                        error: false,
+                        message: `Here the updated user list for channel [${channel}]`,
+                        data: {
+                            users: ircService.listChannelUsers(channel),
+                            channel: channel
+                        },
+                        timestamp: tools.now()
+                    });
+                }
                 return cb({ error: false, message: `You left the channel ${channel}`, timestamp: tools.now() });
             });
         },
