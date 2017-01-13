@@ -171,12 +171,12 @@ var handlers = function (server, ircService, io) {
             }
 
             io.to(toUser.socket.id).emit('receivePrivateMessage', {
-                nickname: fromUser.nickname,
+                nickname: `FROM: ${fromUser.nickname}`,
                 message: content,
                 timestamp: tools.now()
             });
             console.log(`[${tools.datetime()}] - ${fromUser.nickname} send a PM to ${toUser.nickname} !`);
-            return cb({ error: false, nickname: "SERVER", message: `Your message was delivered to ${to}`, timestamp: tools.now() });
+            return cb({ error: false, nickname: `TO: ${toUser.nickname}`, message: content, timestamp: tools.now() });
         },
         sendMessage: function (channel, content, cb) {
             var socket = this;
