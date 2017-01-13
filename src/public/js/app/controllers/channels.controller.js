@@ -25,12 +25,12 @@
 
         $rootScope.$on("selfLeaveChannel", function (e, data) {
             var channel = I.removeChannel(data.channelName);
-            $rootScope.$emit("selfLeftChannelMessage", data);
             if (channel.active && C.channels.length > 0) {
                 C.switchChannel(C.channels[0]);
             } else {
                 C.switchChannel();
             }
+            $rootScope.$emit("selfLeftChannelMessage", data);
         });
 
         C.switchChannel = function (channel) {
