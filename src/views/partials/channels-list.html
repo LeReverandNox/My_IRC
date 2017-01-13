@@ -1,0 +1,27 @@
+<md-list ng-cloak>
+
+    <md-subheader class="md-no-sticky">{{ C.title }}</md-subheader>
+
+    <md-list-item
+        ng-if="C.channels.length === 0">
+        <p> You're currently not in any channel.</p>
+    </md-list-item>
+
+    <div ng-repeat="channel in C.channels">
+        <md-list-item
+            ng-if="!channel.active"
+            ng-click="C.switchChannel(channel)"
+            md-colors="{background: (channel.active ? 'accent' : 'grey-A100')}"
+            class="disable-text-selection">
+            <p> {{ channel.name }} </p>
+        </md-list-item>
+        <md-list-item
+            ng-if="channel.active"
+            md-colors="{background: (channel.active ? 'accent' : 'grey-A100')}"
+            class="disable-text-selection">
+            <p> {{ channel.name }} </p>
+        </md-list-item>
+        <md-divider></md-divider>
+    </div>
+
+</md-list>
