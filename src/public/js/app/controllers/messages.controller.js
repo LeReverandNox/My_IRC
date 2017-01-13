@@ -28,12 +28,12 @@
         function displayMessage(e, data) {
             console.log("On va display ca", data);
             var formattedMessage = formatterService.format(data);
-            addMessage(formattedMessage);
+            addMessage(formattedMessage, data.channel);
         }
 
-        function addMessage(message) {
-            I.currChannel.messages.push(message);
-            console.log(I.currChannel.messages);
+        function addMessage(message, channelName) {
+            var channel = I.getChannelByName(channelName);
+            channel.messages.push(message);
         }
 
     }
