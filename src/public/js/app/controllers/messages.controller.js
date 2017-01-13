@@ -17,14 +17,13 @@
         M.title = "Messages";
         M.channels = I.channels;
 
+        // In current channel
+        $rootScope.$on("hasChangeNickname", displayMessage);
         $rootScope.$on("userJoinChannel", displayMessage);
         $rootScope.$on("userLeftChannel", displayMessage);
-        $rootScope.$on("hasChangeNickname", displayMessage);
-        $rootScope.$on("receivePrivateMessage", displayMessage);
-        $rootScope.$on("receiveMessage", displayMessage);
         $rootScope.$on("listChannelUsers", displayMessage);
-        $rootScope.$on("listChannels", displayMessage);
-        $rootScope.$on("selfChangeNickname", displayMessage);
+        $rootScope.$on("receiveMessage", displayMessage);
+        $rootScope.$on("selfJoinChannelMessage", displayMessage);
 
         function displayMessage(e, data) {
             console.log("On va display ca", data);
