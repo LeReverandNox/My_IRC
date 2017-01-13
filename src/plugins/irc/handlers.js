@@ -28,12 +28,12 @@ var handlers = function (server, ircService, io) {
 
             channel = channel.trim() || "";
             if (!channel) {
-                return cb({ message: "This channel name is too short !", timestamp: tools.now() });
+                return cb({ error: true, message: "This channel name is too short !", timestamp: tools.now() });
             }
 
             ircService.joinChannel(user, channel, function (err, msg) {
                 if (err) {
-                    return cb({ message: msg, timestamp: tools.now() });
+                    return cb({ error: true, message: msg, timestamp: tools.now() });
                 }
                 console.log(`[${tools.datetime()}] - ${user.nickname} join the channel ${channel} !`);
 
@@ -42,7 +42,7 @@ var handlers = function (server, ircService, io) {
                     message: `${user.nickname} join the channel [${channel}]`,
                     timestamp: tools.now()
                 });
-                return cb({ message: `You join the channel ${channel}`, timestamp: tools.now() });
+                return cb({ error: false, message: `You join the channel ${channel}`, timestamp: tools.now() });
             });
         },
         leaveChannel: function (channel, cb) {
@@ -51,7 +51,7 @@ var handlers = function (server, ircService, io) {
 
             ircService.leaveChannel(user, channel, function (err, msg) {
                 if (err) {
-                    return cb({ message: msg, timestamp: tools.now() });
+                    return cb({ error: true, message: msg, timestamp: tools.now() });
                 }
                 console.log(`[${tools.datetime()}] - ${user.nickname} left the channel ${channel} !`);
 
@@ -60,7 +60,7 @@ var handlers = function (server, ircService, io) {
                     message: `${user.nickname} has left the channel [${channel}]`,
                     timestamp: tools.now()
                 });
-                return cb({ message: `You left the channel ${channel}`, timestamp: tools.now() });
+                return cb({ error: false, message: `You left the channel ${channel}`, timestamp: tools.now() });
             });
         },
         listChannelUsers: function (channel, cb) {
@@ -69,6 +69,7 @@ var handlers = function (server, ircService, io) {
 
             if (!ircService.channelExist(channel)) {
                 return cb({
+                    error: true,
                     message: "This channel doesn't exist !",
                     data: [],
                     timestamp: tools.now()
@@ -78,6 +79,7 @@ var handlers = function (server, ircService, io) {
             var users = ircService.listChannelUsers(channel);
             console.log(`[${tools.datetime()}] - ${user.nickname} ask for channel [${channel}] users list!`);
             return cb({
+                error: false,
                 message: `Here the user list for channel [${channel}]`,
                 data: users,
                 timestamp: tools.now()
@@ -100,6 +102,7 @@ var handlers = function (server, ircService, io) {
 
             console.log(`[${tools.datetime()}] - ${user.nickname} ask for channels list!`);
             return cb({
+                error: false,
                 message: message,
                 data: channels,
                 timestamp: tools.now()
@@ -112,12 +115,12 @@ var handlers = function (server, ircService, io) {
 
             newNickname = newNickname.trim() || "";
             if (!newNickname) {
-                return cb({ message: "This nickname is too short !", timestamp: tools.now() });
+                return cb({ error: true, message: "This nickname is too short !", timestamp: tools.now() });
             }
 
             ircService.changeUserNickname(user, newNickname, function (err, msg) {
                 if (err) {
-                    return cb({ message: msg, timestamp: tools.now() });
+                    return cb({ error: true, message: msg, timestamp: tools.now() });
                 }
                 console.log(`[${tools.datetime()}] - ${oldNickname} change is nickname to ${user.nickname} !`);
 
@@ -128,7 +131,7 @@ var handlers = function (server, ircService, io) {
                         timestamp: tools.now()
                     });
                 });
-                return cb({ message: `You change your nickname from ${oldNickname} to ${user.nickname}`, timestamp: tools.now() });
+                return cb({ error: false, message: msg || `You change your nickname from ${oldNickname} to ${user.nickname}`, timestamp: tools.now() });
             });
         },
         sendPrivateMessage: function (to, content, cb) {
@@ -138,12 +141,12 @@ var handlers = function (server, ircService, io) {
             to = to.trim() || "";
             var toUser = ircService.getUserByNickname(to);
             if (!toUser) {
-                return cb({ message: `The user ${to} doesn't exist.`, timestamp: tools.now() });
+                return cb({ error: true, message: `The user ${to} doesn't exist.`, timestamp: tools.now() });
             }
 
             content = content.trim() || "";
             if (!content) {
-                return cb({ message: `You can't send an empty private-message`, timestamp: tools.now() });
+                return cb({ error: true, message: `You can't send an empty private-message`, timestamp: tools.now() });
             }
 
             io.to(toUser.socket.id).emit('receivePrivateMessage', {
@@ -152,7 +155,7 @@ var handlers = function (server, ircService, io) {
                 timestamp: tools.now()
             });
             console.log(`[${tools.datetime()}] - ${fromUser.nickname} send a PM to ${toUser.nickname} !`);
-            return cb({ message: `Your message was delivered to ${to}`, timestamp: tools.now() });
+            return cb({ error: false, message: `Your message was delivered to ${to}`, timestamp: tools.now() });
         },
         sendMessage: function (channel, content, cb) {
             var socket = this;
@@ -160,12 +163,12 @@ var handlers = function (server, ircService, io) {
 
             channel = channel.trim() || "";
             if (!ircService.channelExist(channel)) {
-                return cb({ message: `The channel ${channel} doesn't exist.`, timestamp: tools.now() });
+                return cb({ error: true, message: `The channel ${channel} doesn't exist.`, timestamp: tools.now() });
             }
 
             content = content.trim() || "";
             if (!content) {
-                return cb({ message: `You can't send an empty message`, timestamp: tools.now() });
+                return cb({ error: true, message: `You can't send an empty message`, timestamp: tools.now() });
             }
 
             io.to(channel).emit("receiveMessage", {
@@ -175,7 +178,7 @@ var handlers = function (server, ircService, io) {
                 timestamp: tools.now()
             });
             console.log(`[${tools.datetime()}] - ${user.nickname} send a message to channel [${channel}] !`);
-            return cb({ message: `Your message was delivered`, timestamp: tools.now() });
+            return cb({ error: false, message: `Your message was delivered`, timestamp: tools.now() });
         },
         disconnect: function () {
             var socket = this;
