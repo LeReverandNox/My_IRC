@@ -31,6 +31,7 @@
         $rootScope.$on("listChannels", displayMessage);
         $rootScope.$on("selfPrivateMessageSent", displayMessage);
         $rootScope.$on("receivePrivateMessage", displayMessage);
+        $rootScope.$on("selfMessageSent", displayMessage);
 
         function displayMessage(e, data) {
             console.log("On va display ca", data);
