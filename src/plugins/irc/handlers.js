@@ -128,7 +128,7 @@ var handlers = function (server, ircService, io) {
             return cb({
                 error: false,
                 nickname: "SERVER",
-                message: message,
+                message: `${message} :`,
                 data: channels,
                 timestamp: tools.now()
             });
