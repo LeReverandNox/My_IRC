@@ -42,7 +42,8 @@ var handlers = function (server, ircService, io) {
                     message: `${user.nickname} join the channel [${channel}]`,
                     timestamp: tools.now()
                 });
-                io.to(channel).emit("updateUsersInChannel", {
+                cb({ error: false, message: `You join the channel ${channel}`, timestamp: tools.now() });
+                return io.to(channel).emit("updateUsersInChannel", {
                     error: false,
                     message: `Here the updated user list for channel [${channel}]`,
                     data: {
@@ -51,7 +52,6 @@ var handlers = function (server, ircService, io) {
                     },
                     timestamp: tools.now()
                 });
-                return cb({ error: false, message: `You join the channel ${channel}`, timestamp: tools.now() });
             });
         },
         leaveChannel: function (channel, cb) {
@@ -69,8 +69,9 @@ var handlers = function (server, ircService, io) {
                     message: `${user.nickname} has left the channel [${channel}]`,
                     timestamp: tools.now()
                 });
+                cb({ error: false, message: `You left the channel ${channel}`, timestamp: tools.now() });
                 if (ircService.channelExist(channel)) {
-                    io.to(channel).emit("updateUsersInChannel", {
+                    return io.to(channel).emit("updateUsersInChannel", {
                         error: false,
                         message: `Here the updated user list for channel [${channel}]`,
                         data: {
@@ -80,7 +81,6 @@ var handlers = function (server, ircService, io) {
                         timestamp: tools.now()
                     });
                 }
-                return cb({ error: false, message: `You left the channel ${channel}`, timestamp: tools.now() });
             });
         },
         listChannelUsers: function (channel, cb) {
