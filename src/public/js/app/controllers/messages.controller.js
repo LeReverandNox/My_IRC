@@ -25,6 +25,10 @@
         $rootScope.$on("receiveMessage", displayMessage);
         $rootScope.$on("selfJoinChannelMessage", displayMessage);
 
+        // Out-off current channel
+        $rootScope.$on("selfLeftChannelMessage", displayMessage);
+        $rootScope.$on("selfChangeNickname", displayMessage);
+        $rootScope.$on("listChannels", displayMessage);
         function displayMessage(e, data) {
             console.log("On va display ca", data);
             var formattedMessage = formatterService.format(data);
