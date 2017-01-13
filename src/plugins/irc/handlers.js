@@ -70,9 +70,8 @@ var handlers = function (server, ircService, io) {
                     message: `${user.nickname} has left the channel [${channel}]`,
                     timestamp: tools.now()
                 });
-                cb({ error: false, nickname: "", channelName: channel, message: `You left the channel [${channel}]`, timestamp: tools.now() });
                 if (ircService.channelExist(channel)) {
-                    return io.to(channel).emit("updateUsersInChannel", {
+                    io.to(channel).emit("updateUsersInChannel", {
                         error: false,
                         nickname: "SERVER",
                         message: `Here the updated user list for channel [${channel}]`,
@@ -83,6 +82,7 @@ var handlers = function (server, ircService, io) {
                         timestamp: tools.now()
                     });
                 }
+                return cb({ error: false, nickname: "", channelName: "", message: `You left the channel [${channel}]`, timestamp: tools.now() });
             });
         },
         listChannelUsers: function (channel, cb) {
