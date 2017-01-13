@@ -42,7 +42,7 @@ var handlers = function (server, ircService, io) {
                     message: `${user.nickname} join the channel [${channel}]`,
                     timestamp: tools.now()
                 });
-                cb({ error: false, message: `You join the channel ${channel}`, timestamp: tools.now() });
+                cb({ error: false, nickname: "", channelName: channel, message: `You join the channel [${channel}]`, timestamp: tools.now() });
                 return io.to(channel).emit("updateUsersInChannel", {
                     error: false,
                     nickname: "SERVER",
@@ -70,7 +70,7 @@ var handlers = function (server, ircService, io) {
                     message: `${user.nickname} has left the channel [${channel}]`,
                     timestamp: tools.now()
                 });
-                cb({ error: false, nickname: "SERVER", message: `You left the channel ${channel}`, timestamp: tools.now() });
+                cb({ error: false, nickname: "", channelName: channel, message: `You left the channel [${channel}]`, timestamp: tools.now() });
                 if (ircService.channelExist(channel)) {
                     return io.to(channel).emit("updateUsersInChannel", {
                         error: false,
@@ -104,7 +104,7 @@ var handlers = function (server, ircService, io) {
             return cb({
                 error: false,
                 nickname: "SERVER",
-                message: `Here the user list for channel [${channel}]`,
+                message: `Here the user list for the channel [${channel}] :`,
                 data: users,
                 timestamp: tools.now()
             });
@@ -140,7 +140,7 @@ var handlers = function (server, ircService, io) {
 
             newNickname = newNickname.trim() || "";
             if (!newNickname) {
-                return cb({ error: true, nickname: "SERVER", message: "This nickname is too short !", timestamp: tools.now() });
+                return cb({ error: true, nickname: "", message: "This nickname is too short !", timestamp: tools.now() });
             }
 
             ircService.changeUserNickname(user, newNickname, function (err, msg) {
@@ -166,7 +166,7 @@ var handlers = function (server, ircService, io) {
                         timestamp: tools.now()
                     });
                 });
-                return cb({ error: false, nickname: "SERVER", message: msg || `You change your nickname from ${oldNickname} to ${user.nickname}`, timestamp: tools.now() });
+                return cb({ error: false, nickname: "", message: msg || `You change your nickname from ${oldNickname} to ${user.nickname}`, timestamp: tools.now() });
             });
         },
         sendPrivateMessage: function (to, content, cb) {
