@@ -6,6 +6,19 @@
 var tools = require("./lib/tools");
 
 var handlers = function (server, ircService, io) {
+    function updateUsersInChannel(channel) {
+        return io.to(channel).emit("updateUsersInChannel", {
+            error: false,
+            nickname: "SERVER",
+            message: `Here the updated user list for channel [${channel}]`,
+            data: {
+                users: ircService.listChannelUsers(channel),
+                channel: channel
+            },
+            timestamp: tools.now()
+        });
+    }
+
     return {
         handleNewUser: function (socket) {
             var baseNickname = tools.generateNickname();
@@ -43,16 +56,7 @@ var handlers = function (server, ircService, io) {
                     timestamp: tools.now()
                 });
                 cb({ error: false, nickname: "", channelName: channel, message: `You join the channel [${channel}]`, timestamp: tools.now() });
-                return io.to(channel).emit("updateUsersInChannel", {
-                    error: false,
-                    nickname: "SERVER",
-                    message: `Here the updated user list for channel [${channel}]`,
-                    data: {
-                        users: ircService.listChannelUsers(channel),
-                        channel: channel
-                    },
-                    timestamp: tools.now()
-                });
+                return updateUsersInChannel(channel);
             });
         },
         leaveChannel: function (channel, cb) {
@@ -71,16 +75,7 @@ var handlers = function (server, ircService, io) {
                     timestamp: tools.now()
                 });
                 if (ircService.channelExist(channel)) {
-                    io.to(channel).emit("updateUsersInChannel", {
-                        error: false,
-                        nickname: "SERVER",
-                        message: `Here the updated user list for channel [${channel}]`,
-                        data: {
-                            users: ircService.listChannelUsers(channel),
-                            channel: channel
-                        },
-                        timestamp: tools.now()
-                    });
+                    updateUsersInChannel(channel);
                 }
                 return cb({ error: false, nickname: "", channelName: "", message: `You left the channel [${channel}]`, timestamp: tools.now() });
             });
@@ -150,16 +145,7 @@ var handlers = function (server, ircService, io) {
                 console.log(`[${tools.datetime()}] - ${oldNickname} change is nickname to ${user.nickname} !`);
 
                 user.channels.forEach(function (channel) {
-                    io.to(channel).emit("updateUsersInChannel", {
-                        error: false,
-                        nickname: "SERVER",
-                        message: `Here the updated user list for channel [${channel}]`,
-                        data: {
-                            users: ircService.listChannelUsers(channel),
-                            channel: channel
-                        },
-                        timestamp: tools.now()
-                    });
+                    updateUsersInChannel(channel);
                     socket.broadcast.to(channel).emit("hasChangeNickname", {
                         nickname: "SERVER",
                         message: `${oldNickname} change is nickname to ${user.nickname} !`,
@@ -222,6 +208,7 @@ var handlers = function (server, ircService, io) {
             user.channels.forEach(function (channel) {
                 ircService.leaveChannel(user, channel, function (err, msg) {
                     console.log(`[${tools.datetime()}] - ${user.nickname} left the channel ${channel} !`);
+                    updateUsersInChannel(channel);
                     socket.broadcast.to(channel).emit("userLeftChannel", {
                         nickname: "SERVER",
                         message: `${user.nickname} has left the channel [${channel}]`,
