@@ -145,6 +145,15 @@ var handlers = function (server, ircService, io) {
                 console.log(`[${tools.datetime()}] - ${oldNickname} change is nickname to ${user.nickname} !`);
 
                 user.channels.forEach(function (channel) {
+                    io.to(channel).emit("updateUsersInChannel", {
+                        error: false,
+                        message: `Here the updated user list for channel [${channel}]`,
+                        data: {
+                            users: ircService.listChannelUsers(channel),
+                            channel: channel
+                        },
+                        timestamp: tools.now()
+                    });
                     socket.broadcast.to(channel).emit("hasChangeNickname", {
                         nickname: "SERVER",
                         message: `${oldNickname} change is nickname to ${user.nickname} !`,
