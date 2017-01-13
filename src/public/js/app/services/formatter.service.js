@@ -61,7 +61,7 @@
         function format(data) {
             var date = this.formatDate(data.timestamp);
             var nickname = this.formatNickname(data.nickname);
-            var content = this.formatContent(data.message);
+            var content = this.formatContent(data.message, data.data);
 
             console.log(date, nickname, content);
             return `${date} ${nickname} ${content}`;
@@ -73,10 +73,18 @@
         }
 
         function formatNickname(nickname) {
-            return `<${nickname}>`;
+            return nickname.length > 0 ? `<${nickname}>` : "";
         }
 
-        function formatContent(content) {
+        function formatContent(content, data) {
+            content = content.trim();
+
+            if (data) {
+                data.forEach(function (el) {
+                    content = `${content} \n\r - ${el}`
+                });
+            }
+
             return content;
         }
 
