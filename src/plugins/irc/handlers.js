@@ -77,7 +77,7 @@ var handlers = function (server, ircService, io) {
                 if (ircService.channelExist(channel)) {
                     updateUsersInChannel(channel);
                 }
-                return cb({ error: false, nickname: "", channelName: "", message: `You left the channel [${channel}]`, timestamp: tools.now() });
+                return cb({ error: false, nickname: "", channelName: channel, message: `You left the channel [${channel}]`, timestamp: tools.now() });
             });
         },
         listChannelUsers: function (channel, cb) {
