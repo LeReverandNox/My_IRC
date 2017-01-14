@@ -10,3 +10,17 @@
 .angular-with-newlines {
     white-space: pre;
 }
+
+.custom-hidden {
+    visibility: hidden;
+    cursor: default;
+}
+
+.animate-show-hide.custom-hidden {
+    opacity: 0;
+}
+
+.animate-show-hide.custom-hidden-add,
+.animate-show-hide.custom-hidden-remove {
+    transition: all linear 0.1s;
+}
