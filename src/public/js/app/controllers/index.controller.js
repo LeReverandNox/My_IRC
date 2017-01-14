@@ -8,9 +8,9 @@
         .module("my_irc")
         .controller("Index", IndexController);
 
-    IndexController.$inject = ["$rootScope", "indexIrcService"];
+    IndexController.$inject = ["$rootScope"];
 
-    function IndexController($rootScope, indexIrcService) {
+    function IndexController($rootScope) {
         var I = this;
 
         I.title = "My_IRC";
@@ -56,12 +56,9 @@
             return channel;
         };
 
-        I.message = "";
-        I.nickname = "";
-
         $rootScope.$on("handshake", function (e, data) {
             I.message = data.message;
             I.nickname = data.nickname;
         });
     }
-}());
+} ());
