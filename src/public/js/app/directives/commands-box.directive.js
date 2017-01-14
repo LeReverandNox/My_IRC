@@ -14,7 +14,7 @@
             link: link,
             templateUrl: "/partials/commands-box.html",
             controller: "Commands",
-            controllerAs: "C",
+            controllerAs: "Co",
             bindToController: true
         };
 
