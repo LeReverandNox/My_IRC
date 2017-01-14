@@ -29,6 +29,8 @@
     <!-- STYLE -->
     <!--Angular Material CSS Sheet-->
     <link rel="stylesheet" href="js/lib/angular-material/angular-material.css">
+    <!-- Material Font Icons set-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Own CSS Sheet-->
     <link rel="stylesheet" href="css/style.css">
 
@@ -44,17 +46,21 @@
     <script src="js/app/services/index-irc.service.js"></script>
     <script src="js/app/services/channels-irc.service.js"></script>
     <script src="js/app/services/messages-irc.service.js"></script>
+    <script src="js/app/services/commands-parser.service.js"></script>
+    <script src="js/app/services/commands.service.js"></script>
 
     <!--Controllers-->
     <script src="js/app/controllers/index.controller.js"></script>
     <script src="js/app/controllers/channels.controller.js"></script>
     <script src="js/app/controllers/users.controller.js"></script>
     <script src="js/app/controllers/messages.controller.js"></script>
+    <script src="js/app/controllers/commands.controller.js"></script>
 
     <!--Directives-->
     <script src="js/app/directives/channels-list.directive.js"></script>
     <script src="js/app/directives/users-list.directive.js"></script>
     <script src="js/app/directives/messages-list.directive.js"></script>
+    <script src="js/app/directives/commands-box.directive.js"></script>
 </head>
 <body ng-app="my_irc">
     <ui-view />

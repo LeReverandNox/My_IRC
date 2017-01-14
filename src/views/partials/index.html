@@ -5,7 +5,11 @@
         </h1>
     </md-toolbar>
     <span class="md-accent">{{ I.message }}</span>
-    <messages-list></messages-list>
-    <channels-list></channels-list>
-    <users-list></users-list>
+
+    <div layout="row" layout-wrap>
+        <channels-list flex="20"></channels-list>
+        <messages-list flex="60"></messages-list>
+        <users-list flex="20"></users-list>
+    </div>
+    <commands-box></commands-box>
 </div>

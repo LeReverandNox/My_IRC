@@ -1,0 +1,10 @@
+<md-content layout-padding>
+    <form name="commandForm" layout layout-align="center center" layout-sm="column" flex="100" ng-submit="Co.command && Co.submitCommand()">
+        <md-input-container md-no-float class="md-icon-float" flex="90">
+            <input ng-model="Co.command" type="text" placeholder="Start chatting here" autocomplete="off">
+        </md-input-container>
+        <md-button type="submit" style="display:inline-block;" ng-class="{'custom-hidden': !Co.command}" class="animate-show-hide">
+            <md-icon md-colors="{color: 'accent'}">send</md-icon>
+        </md-button>
+    </form>
+</md-content>
