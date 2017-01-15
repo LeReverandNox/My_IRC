@@ -21,7 +21,8 @@
             sendMessage: sendMessage,
             listCommands: listCommands,
             randomGiphy: randomGiphy,
-            meAction: meAction
+            meAction: meAction,
+            ameAction:ameAction
         };
 
         return service;
@@ -94,6 +95,14 @@
             return messagesIrcService.meAction(channel, action, function (res) {
                 if (res.error) {
                     return $rootScope.$emit("selfMeAction", res);
+                }
+            });
+        }
+
+        function ameAction(action) {
+            return messagesIrcService.ameAction(action, function (res) {
+                if (res.error) {
+                    return $rootScope.$emit("selfAmeAction", res);
                 }
             });
         }

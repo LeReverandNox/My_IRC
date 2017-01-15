@@ -317,7 +317,7 @@ var handlers = function (ircService, io) {
     };
 
     var meAction = {
-        desc: "/me [action] - Send a action message on the current channel",
+        desc: "/me [action] - Send an action message on the current channel",
         action: function (channel, action, cb) {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
@@ -348,6 +348,34 @@ var handlers = function (ircService, io) {
             });
             console.log(`[${tools.datetime()}] - ${user.nickname} send a action message to channel [${channel}] !`);
             return cb({ error: false, nickname: "SERVER", message: `Your action message was delivered`, timestamp: tools.now() });
+        }
+    };
+
+    var ameAction = {
+        desc: "/ame [action] - Send an action message to all channels you're in",
+        action: function (action, cb) {
+            var socket = this;
+            var user = ircService.getUserBySocketId(socket.id);
+
+            if (!action || action.trim() === "") {
+                return cb({ error: true, nickname: "", message: `You can't send an empty action message`, timestamp: tools.now() });
+            }
+            action = action.trim();
+
+            if (user.channels.length === 0) {
+                return cb({ error: true, nickname: "", message: `You need to in at least one channel to send a global action message`, timestamp: tools.now() });
+            }
+
+            user.channels.forEach(function (channel) {
+                io.to(channel).emit("receiveMessage", {
+                    nickname: "",
+                    message: `${user.nickname} ${action}`,
+                    channel: channel,
+                    timestamp: tools.now()
+                });
+            });
+            console.log(`[${tools.datetime()}] - ${user.nickname} send a global action message !`);
+            return cb({ error: false, nickname: "SERVER", message: `Your global action message was delivered`, timestamp: tools.now() });
         }
     };
 
@@ -389,6 +417,7 @@ var handlers = function (ircService, io) {
         listCommands: listCommands,
         randomGiphy: randomGiphy,
         meAction: meAction,
+        ameAction: ameAction,
         disconnect: disconnect
     };
 };

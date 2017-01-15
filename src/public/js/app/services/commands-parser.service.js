@@ -83,6 +83,9 @@
             case "me":
                 commandsService.meAction(currChannelName, arg1.concat(" ", arg2));
                 break;
+            case "ame":
+                commandsService.ameAction(arg1.concat(" ", arg2));
+                break;
             default:
                 $rootScope.$emit("unknowCommand", { error: true, nickname: "", message: "Unknown command, please refer to /help.", timestamp: new Date().getTime() });
                 break;
