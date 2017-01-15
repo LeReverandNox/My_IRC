@@ -70,13 +70,13 @@ var handlers = function (server, ircService, io) {
                 }
                 console.log(`[${tools.datetime()}] - ${user.nickname} left the channel ${channel} !`);
 
-                socket.broadcast.to(channel).emit("userLeftChannel", {
-                    nickname: "SERVER",
-                    channel: channel,
-                    message: `${user.nickname} has left the channel [${channel}]`,
-                    timestamp: tools.now()
-                });
                 if (ircService.channelExist(channel)) {
+                    socket.broadcast.to(channel).emit("userLeftChannel", {
+                        nickname: "SERVER",
+                        channel: channel,
+                        message: `${user.nickname} has left the channel [${channel}]`,
+                        timestamp: tools.now()
+                    });
                     updateUsersInChannel(channel);
                 }
                 return cb({ error: false, nickname: "", channelName: channel, message: `You left the channel [${channel}]`, timestamp: tools.now() });
@@ -227,6 +227,7 @@ var handlers = function (server, ircService, io) {
                         updateUsersInChannel(channel);
                         socket.broadcast.to(channel).emit("userLeftChannel", {
                             nickname: "SERVER",
+                            channel: channel,
                             message: `${user.nickname} has left the channel [${channel}]`,
                             timestamp: tools.now()
                         });
