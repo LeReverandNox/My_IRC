@@ -18,12 +18,13 @@
             listChannelUsers: listChannelUsers,
             listChannels: listChannels,
             sendPrivateMessage: sendPrivateMessage,
-            sendMessage: sendMessage
+            sendMessage: sendMessage,
+            listCommands: listCommands
         };
 
         return service;
 
-        function joinChannel (channel) {
+        function joinChannel(channel) {
             return channelsIrcService.joinChannel(channel, function (res) {
                 if (res.error) {
                     return $rootScope.$emit("selfJoinChannelMessage", res);
@@ -32,7 +33,7 @@
             });
         }
 
-        function leaveChannel (channel) {
+        function leaveChannel(channel) {
             return channelsIrcService.leaveChannel(channel, function (res) {
                 if (res.error) {
                     return $rootScope.$emit("selfLeftChannelMessage", res);
@@ -41,35 +42,41 @@
             });
         }
 
-        function changeNickname (nickname) {
+        function changeNickname(nickname) {
             return indexIrcService.changeNickname(nickname, function (res) {
                 return $rootScope.$emit("selfChangeNickname", res);
             });
         }
 
-        function listChannelUsers (channel) {
+        function listChannelUsers(channel) {
             return channelsIrcService.listChannelUsers(channel, function (res) {
                 return $rootScope.$emit("listChannelUsers", res);
             });
         }
 
-        function listChannels (string) {
+        function listChannels(string) {
             return channelsIrcService.listChannels(string, function (res) {
                 return $rootScope.$emit("listChannels", res);
             });
         }
 
-        function sendPrivateMessage (to, content) {
+        function sendPrivateMessage(to, content) {
             return messagesIrcService.sendPrivateMessage(to, content, function (res) {
                 return $rootScope.$emit("selfPrivateMessageSent", res);
             });
         }
 
-        function sendMessage (channel, content) {
+        function sendMessage(channel, content) {
             return messagesIrcService.sendMessage(channel, content, function (res) {
                 if (res.error) {
                     return $rootScope.$emit("selfMessageSent", res);
                 }
+            });
+        }
+
+        function listCommands() {
+            return indexIrcService.listCommands(function (res) {
+                return $rootScope.$emit("listCommands", res);
             });
         }
     }
