@@ -20,15 +20,14 @@
 
         return service;
 
-        function leftPadDate (elem) {
-            "use strict";
+        function leftPadDate(elem) {
             if (elem < 10) {
                 elem = "0" + elem;
             }
             return elem;
         }
 
-        function computeDate (timestamp) {
+        function computeDate(timestamp) {
             var dateObj = new Date(timestamp);
 
             var month = (dateObj.getUTCMonth() + 1);
@@ -63,7 +62,6 @@
             var nickname = this.formatNickname(data.nickname);
             var content = this.formatContent(data.message, data.data);
 
-            console.log(date, nickname, content);
             return `${date} ${nickname} ${content}`;
         }
 
@@ -87,6 +85,5 @@
 
             return content;
         }
-
     }
 } ());
