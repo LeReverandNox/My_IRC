@@ -277,6 +277,45 @@ var handlers = function (ircService, io) {
         }
     };
 
+    var randomGiphy = {
+        desc: "/giphy [?tag] - Send a gif to the current channel",
+        action: function (channel, tag, cb) {
+            var socket = this;
+            var user = ircService.getUserBySocketId(socket.id);
+
+            if (!channel || channel.trim() === "") {
+                return cb({ error: true, nickname: "", message: `You must be in a channel to send a message.`, timestamp: tools.now() });
+            }
+
+            channel = channel.trim();
+            if (!ircService.channelExist(channel)) {
+                return cb({ error: true, nickname: "", message: `The channel ${channel} doesn't exist.`, timestamp: tools.now() });
+            }
+
+            tag = tag.trim();
+
+            if (!ircService.isUserInChannel(user, channel)) {
+                return cb({ error: true, nickname: "", message: `You are not a member of this channel.`, timestamp: tools.now() });
+            }
+
+            tools.getGif(tag, function (err, content) {
+                if (err) {
+                    return cb({ error: true, nickname: "", message: content, timestamp: tools.now() });
+                }
+
+                io.to(channel).emit("receiveMessage", {
+                    nickname: user.nickname,
+                    message: `/giphy ${tag}`,
+                    attachment: content,
+                    channel: channel,
+                    timestamp: tools.now()
+                });
+                console.log(`[${tools.datetime()}] - ${user.nickname} send a gif to channel [${channel}] !`);
+                return cb({ error: false, nickname: "SERVER", message: `Your gif was delivered`, timestamp: tools.now() });
+            });
+        }
+    };
+
     var disconnect = {
         desc: null,
         action: function () {
@@ -313,6 +352,7 @@ var handlers = function (ircService, io) {
         sendPrivateMessage: sendPrivateMessage,
         sendMessage: sendMessage,
         listCommands: listCommands,
+        randomGiphy: randomGiphy,
         disconnect: disconnect
     };
 };
