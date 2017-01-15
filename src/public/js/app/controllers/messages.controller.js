@@ -45,6 +45,10 @@
                 channel.messages.push(message);
                 if (channelName !== I.currChannel.name) {
                     I.incUnreadCount(channelName);
+                } else {
+                    if (!I.focus) {
+                        I.incUnreadCount(channelName);
+                    }
                 }
             } else {
                 I.currChannel.messages.push(message);

@@ -8,12 +8,13 @@
         .module("my_irc")
         .controller("Index", IndexController);
 
-    IndexController.$inject = ["$rootScope"];
+    IndexController.$inject = ["$rootScope", "$window"];
 
-    function IndexController($rootScope) {
+    function IndexController($rootScope, $window) {
         var I = this;
 
         I.title = "My_IRC";
+        I.focus = true;
 
         init();
 
@@ -77,7 +78,8 @@
         function init() {
             I.channels = [];
             I.personnalChannel = {
-                messages: []
+                messages: [],
+                unreadCount: 0
             };
             I.currChannel = I.personnalChannel;
         }
@@ -90,5 +92,16 @@
         $rootScope.$on("disconnect", function (e) {
             init();
         });
+
+        $window.onfocus = function () {
+            I.focus = true;
+            if (I.currChannel.name) {
+                I.resetUnreadCount(I.currChannel.name);
+            }
+        };
+
+        $window.onblur = function () {
+            I.focus = false;
+        };
     }
 } ());
