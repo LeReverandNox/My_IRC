@@ -155,6 +155,7 @@ var handlers = function (server, ircService, io) {
                     updateUsersInChannel(channel);
                     socket.broadcast.to(channel).emit("hasChangeNickname", {
                         nickname: "SERVER",
+                        channel: channel,
                         message: `${oldNickname} change is nickname to ${user.nickname} !`,
                         timestamp: tools.now()
                     });
