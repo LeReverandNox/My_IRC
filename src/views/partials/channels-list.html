@@ -3,11 +3,11 @@
     <md-subheader class="md-no-sticky">{{ C.title }}</md-subheader>
 
     <md-list-item
-        ng-if="C.channels.length === 0">
+        ng-if="I.channels.length === 0">
         <p> You're currently not in any channel.</p>
     </md-list-item>
 
-    <div ng-repeat="channel in C.channels">
+    <div ng-repeat="channel in I.channels">
         <md-list-item
             ng-if="!channel.active"
             ng-click="C.switchChannel(channel)"
