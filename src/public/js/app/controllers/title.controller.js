@@ -22,7 +22,7 @@
 
         $rootScope.$on("updateUnreadCount", function (e, count) {
             T.unreadCount = count;
-            $rootScope.$apply();
+            // $rootScope.$apply();
         });
     }
 } ());
