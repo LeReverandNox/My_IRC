@@ -221,12 +221,14 @@ var handlers = function (server, ircService, io) {
             user.channels.forEach(function (channel) {
                 ircService.leaveChannel(user, channel, function (err, msg) {
                     console.log(`[${tools.datetime()}] - ${user.nickname} left the channel ${channel} !`);
-                    updateUsersInChannel(channel);
-                    socket.broadcast.to(channel).emit("userLeftChannel", {
-                        nickname: "SERVER",
-                        message: `${user.nickname} has left the channel [${channel}]`,
-                        timestamp: tools.now()
-                    });
+                    if (ircService.channelExist(channel)) {
+                        updateUsersInChannel(channel);
+                        socket.broadcast.to(channel).emit("userLeftChannel", {
+                            nickname: "SERVER",
+                            message: `${user.nickname} has left the channel [${channel}]`,
+                            timestamp: tools.now()
+                        });
+                    }
                 });
             });
 
