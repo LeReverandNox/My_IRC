@@ -54,6 +54,16 @@
             return channel;
         };
 
+        I.incUnreadCount = function (channelName) {
+            var channel = I.getChannelByName(channelName);
+            channel.unreadCount += 1;
+        };
+
+        I.resetUnreadCount = function (channelName) {
+            var channel = I.getChannelByName(channelName);
+            channel.unreadCount = 0;
+        };
+
         function init() {
             I.channels = [];
             I.personnalChannel = {

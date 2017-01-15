@@ -38,7 +38,7 @@
             disableAllChannels();
             if (I.changeCurrentChannel(channel)) {
                 channel.active = true;
-                channel.unreadCount = 0;
+                I.resetUnreadCount(channel.name);
             }
         };
 
