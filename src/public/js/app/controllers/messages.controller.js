@@ -33,6 +33,8 @@
         $rootScope.$on("receivePrivateMessage", displayMessage);
         $rootScope.$on("selfMessageSent", displayMessage);
         $rootScope.$on("listCommands", displayMessage);
+        $rootScope.$on("giphyError", displayMessage);
+        $rootScope.$on("selfMeAction", displayMessage);
         $rootScope.$on("unknowCommand", displayMessage);
 
         function displayMessage(e, data) {

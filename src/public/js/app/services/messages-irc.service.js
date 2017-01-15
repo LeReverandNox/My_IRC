@@ -14,7 +14,8 @@
         var service = {
             sendPrivateMessage: sendPrivateMessage,
             sendMessage: sendMessage,
-            randomGiphy: randomGiphy
+            randomGiphy: randomGiphy,
+            meAction: meAction
         };
 
         function sendPrivateMessage(to, content, cb) {
@@ -29,13 +30,17 @@
             socketService.emit("randomGiphy", channel, tag, cb);
         }
 
+        function meAction(channel, action, cb) {
+            socketService.emit("meAction", channel, action, cb);
+        }
+
         socketService.on("receivePrivateMessage", function (data) {
             $rootScope.$emit("receivePrivateMessage", data);
         });
 
         socketService.on("receiveMessage", function (data) {
             $rootScope.$emit("receiveMessage", data);
-        })
+        });
 
         return service;
     }

@@ -316,6 +316,41 @@ var handlers = function (ircService, io) {
         }
     };
 
+    var meAction = {
+        desc: "/me [action] - Send a action message on the current channel",
+        action: function (channel, action, cb) {
+            var socket = this;
+            var user = ircService.getUserBySocketId(socket.id);
+
+            if (!channel || channel.trim() === "") {
+                return cb({ error: true, nickname: "", message: `You must be in a channel to send an action message.`, timestamp: tools.now() });
+            }
+
+            channel = channel.trim();
+            if (!ircService.channelExist(channel)) {
+                return cb({ error: true, nickname: "", message: `The channel ${channel} doesn't exist.`, timestamp: tools.now() });
+            }
+
+            if (!action || action.trim() === "") {
+                return cb({ error: true, nickname: "", message: `You can't send an empty action message`, timestamp: tools.now() });
+            }
+            action = action.trim();
+
+            if (!ircService.isUserInChannel(user, channel)) {
+                return cb({ error: true, nickname: "", message: `You are not a member of this channel.`, timestamp: tools.now() });
+            }
+
+            io.to(channel).emit("receiveMessage", {
+                nickname: "",
+                message: `${user.nickname} ${action}`,
+                channel: channel,
+                timestamp: tools.now()
+            });
+            console.log(`[${tools.datetime()}] - ${user.nickname} send a action message to channel [${channel}] !`);
+            return cb({ error: false, nickname: "SERVER", message: `Your action message was delivered`, timestamp: tools.now() });
+        }
+    };
+
     var disconnect = {
         desc: null,
         action: function () {
@@ -353,6 +388,7 @@ var handlers = function (ircService, io) {
         sendMessage: sendMessage,
         listCommands: listCommands,
         randomGiphy: randomGiphy,
+        meAction: meAction,
         disconnect: disconnect
     };
 };

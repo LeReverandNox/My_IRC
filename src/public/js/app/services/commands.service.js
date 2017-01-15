@@ -20,7 +20,8 @@
             sendPrivateMessage: sendPrivateMessage,
             sendMessage: sendMessage,
             listCommands: listCommands,
-            randomGiphy: randomGiphy
+            randomGiphy: randomGiphy,
+            meAction: meAction
         };
 
         return service;
@@ -84,7 +85,15 @@
         function randomGiphy(channel, tag) {
             return messagesIrcService.randomGiphy(channel, tag, function (res) {
                 if (res.error) {
-                    return $rootScope.$emit("selfMessageSent", res);
+                    return $rootScope.$emit("giphyError", res);
+                }
+            });
+        }
+
+        function meAction(channel, action) {
+            return messagesIrcService.meAction(channel, action, function (res) {
+                if (res.error) {
+                    return $rootScope.$emit("selfMeAction", res);
                 }
             });
         }
