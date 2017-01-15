@@ -84,7 +84,10 @@
         function randomGiphy(channel, tag) {
             return messagesIrcService.randomGiphy(channel, tag, function (res) {
                 if (res.error) {
-                    return $rootScope.$emit("selfMessageSent", res);
+                    return $rootScope.$emit("giphyError", res);
+                }
+            });
+        }
                 }
             });
         }
