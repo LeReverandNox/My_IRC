@@ -64,6 +64,9 @@ var ircService = function (server, io) {
         },
         listChannelUsers: function (channel) {
             var self = this;
+            if (!io.sockets.adapter.rooms[channel]) {
+                return [];
+            }
             var sockets = io.sockets.adapter.rooms[channel].sockets;
             var users = Object.keys(sockets).map(function (socketId) {
                 return self.getUserBySocketId(socketId).nickname;
