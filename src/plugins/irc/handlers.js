@@ -5,7 +5,7 @@
 
 var tools = require("./lib/tools");
 
-var handlers = function (server, ircService, io) {
+var handlers = function (ircService, io) {
     function updateUsersInChannel(channel) {
         return io.to(channel).emit("updateUsersInChannel", {
             error: false,
