@@ -15,7 +15,6 @@
         var I = $scope.I;
 
         C.title = "Channels";
-        C.channels = I.channels;
 
         $rootScope.$on("selfJoinChannel", function (e, data) {
             var channel = I.addChannel(data.channelName);
@@ -25,8 +24,10 @@
 
         $rootScope.$on("selfLeaveChannel", function (e, data) {
             var channel = I.removeChannel(data.channelName);
-            if (channel.active && C.channels.length > 0) {
-                C.switchChannel(C.channels[0]);
+            if (I.channels.length > 0) {
+                if (channel.active) {
+                    C.switchChannel(I.channels[0]);
+                }
             } else {
                 C.switchChannel();
             }
@@ -41,7 +42,7 @@
         };
 
         function disableAllChannels() {
-            C.channels.forEach(function (channel) {
+            I.channels.forEach(function (channel) {
                 if (channel.active) {
                     channel.active = false;
                 }

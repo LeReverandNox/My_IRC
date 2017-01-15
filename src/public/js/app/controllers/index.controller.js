@@ -14,11 +14,8 @@
         var I = this;
 
         I.title = "My_IRC";
-        I.channels = [];
-        I.personnalChannel = {
-            messages: []
-        };
-        I.currChannel = I.personnalChannel;
+
+        init();
 
         I.addChannel = function (channelName) {
             var channel = {
@@ -56,9 +53,21 @@
             return channel;
         };
 
+        function init() {
+            I.channels = [];
+            I.personnalChannel = {
+                messages: []
+            };
+            I.currChannel = I.personnalChannel;
+        }
+
         $rootScope.$on("handshake", function (e, data) {
             I.message = data.message;
             I.nickname = data.nickname;
+        });
+
+        $rootScope.$on("disconnect", function (e) {
+            init();
         });
     }
 } ());

@@ -43,11 +43,14 @@ var ircService = function (server, io) {
             return cb(false, null);
         },
         leaveChannel: function (user, channel, cb) {
-            if (!this.isUserInChannel(user, channel)) {
-                return cb(true, "You are not a member of this channel.");
+            if (channel === null) {
+                return cb(true, "You're currently not in any channel.");
             }
             if (!this.channelExist(channel)) {
                 return cb(true, "This channel doesn't exist.");
+            }
+            if (!this.isUserInChannel(user, channel)) {
+                return cb(true, "You are not a member of this channel.");
             }
 
             user.channels.splice(user.channels.indexOf(channel), 1);

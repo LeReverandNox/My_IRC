@@ -35,7 +35,6 @@
         $rootScope.$on("unknowCommand", displayMessage);
 
         function displayMessage(e, data) {
-            console.log("On va display ca", data);
             var formattedMessage = formatterService.format(data);
             addMessage(formattedMessage, data.channel);
         }
