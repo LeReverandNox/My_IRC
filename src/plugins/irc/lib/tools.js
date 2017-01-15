@@ -5,6 +5,8 @@
 
 var Chance = require("chance");
 var chance = new Chance();
+var request = require("request");
+var config = require("../../../config");
 
 var leftPadDate = function (elem) {
     if (elem < 10) {
@@ -42,6 +44,34 @@ var tools = {
         secondes = leftPadDate(secondes);
 
         return `${day}/${month}/${year} - ${hours}:${minutes}:${secondes}`;
+    },
+    getGif: function (tag, cb) {
+        var self = this;
+        var url = `${config.giphyBaseURL}?api_key=${config.giphyAPIKey}&tag=${tag}`;
+
+        request.get(url, function (err, r, body) {
+            if (err) {
+                console.error(`[${self.datetime()}] - Something went wrong on Giphy request :`);
+                console.error(err);
+                return cb(true, "Giphy is currently not available, please try later.");
+            }
+
+            var parsedBody;
+            try {
+                parsedBody = JSON.parse(body);
+            } catch (err) {
+                console.error(`[${self.datetime()}] - Something went wrong on parsing Giphy's response :`);
+                console.error(err);
+                return cb(true, "A Giphy error occured.");
+            }
+
+            if (parsedBody.data.length === 0) {
+                return cb(true, `No gif found for ${tag}`);
+            }
+
+            var gifUrl = parsedBody.data.fixed_height_downsampled_url;
+            cb(false, gifUrl);
+        });
     }
 };
 
