@@ -19,7 +19,8 @@
             listChannels: listChannels,
             sendPrivateMessage: sendPrivateMessage,
             sendMessage: sendMessage,
-            listCommands: listCommands
+            listCommands: listCommands,
+            randomGiphy: randomGiphy
         };
 
         return service;
@@ -77,6 +78,14 @@
         function listCommands() {
             return indexIrcService.listCommands(function (res) {
                 return $rootScope.$emit("listCommands", res);
+            });
+        }
+
+        function randomGiphy(channel, tag) {
+            return messagesIrcService.randomGiphy(channel, tag, function (res) {
+                if (res.error) {
+                    return $rootScope.$emit("selfMessageSent", res);
+                }
             });
         }
     }
