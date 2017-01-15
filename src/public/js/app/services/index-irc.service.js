@@ -27,6 +27,10 @@
             $rootScope.$emit("handshake", data);
         });
 
+        socketService.on("disconnect", function () {
+            $rootScope.$emit("disconnect");
+        });
+
         return service;
     }
 }());
