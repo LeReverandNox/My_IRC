@@ -13,7 +13,8 @@
     function messagesIrcService(socketService, $rootScope) {
         var service = {
             sendPrivateMessage: sendPrivateMessage,
-            sendMessage: sendMessage
+            sendMessage: sendMessage,
+            randomGiphy: randomGiphy
         };
 
         function sendPrivateMessage(to, content, cb) {
@@ -22,6 +23,10 @@
 
         function sendMessage(channel, content, cb) {
             socketService.emit("sendMessage", channel, content, cb);
+        }
+
+        function randomGiphy(channel, tag, cb) {
+            socketService.emit("randomGiphy", channel, tag, cb);
         }
 
         socketService.on("receivePrivateMessage", function (data) {
