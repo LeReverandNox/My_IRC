@@ -52,6 +52,7 @@ var handlers = function (server, ircService, io) {
 
                 socket.broadcast.to(channel).emit("userJoinChannel", {
                     nickname: "SERVER",
+                    channel: channel,
                     message: `${user.nickname} join the channel [${channel}]`,
                     timestamp: tools.now()
                 });
@@ -71,6 +72,7 @@ var handlers = function (server, ircService, io) {
 
                 socket.broadcast.to(channel).emit("userLeftChannel", {
                     nickname: "SERVER",
+                    channel: channel,
                     message: `${user.nickname} has left the channel [${channel}]`,
                     timestamp: tools.now()
                 });
