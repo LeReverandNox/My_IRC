@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="my_irc" ng-controller="Title as T">
 <head>
     <meta charset="UTF-8">
-    <title>My_IRC</title>
+    <title>{{ T.appTitle }} {{ T.unreadCount > 0 ? "(" + T.unreadCount + ")" : "" }}</title>
 
     <base href="/">
 
@@ -50,6 +50,7 @@
     <script src="js/app/services/commands.service.js"></script>
 
     <!--Controllers-->
+    <script src="js/app/controllers/title.controller.js"></script>
     <script src="js/app/controllers/index.controller.js"></script>
     <script src="js/app/controllers/channels.controller.js"></script>
     <script src="js/app/controllers/users.controller.js"></script>
@@ -62,7 +63,7 @@
     <script src="js/app/directives/messages-list.directive.js"></script>
     <script src="js/app/directives/commands-box.directive.js"></script>
 </head>
-<body ng-app="my_irc">
+<body>
     <ui-view />
 </body>
 </html>

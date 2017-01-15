@@ -52,6 +52,7 @@ var handlers = function (server, ircService, io) {
 
                 socket.broadcast.to(channel).emit("userJoinChannel", {
                     nickname: "SERVER",
+                    channel: channel,
                     message: `${user.nickname} join the channel [${channel}]`,
                     timestamp: tools.now()
                 });
@@ -69,12 +70,13 @@ var handlers = function (server, ircService, io) {
                 }
                 console.log(`[${tools.datetime()}] - ${user.nickname} left the channel ${channel} !`);
 
-                socket.broadcast.to(channel).emit("userLeftChannel", {
-                    nickname: "SERVER",
-                    message: `${user.nickname} has left the channel [${channel}]`,
-                    timestamp: tools.now()
-                });
                 if (ircService.channelExist(channel)) {
+                    socket.broadcast.to(channel).emit("userLeftChannel", {
+                        nickname: "SERVER",
+                        channel: channel,
+                        message: `${user.nickname} has left the channel [${channel}]`,
+                        timestamp: tools.now()
+                    });
                     updateUsersInChannel(channel);
                 }
                 return cb({ error: false, nickname: "", channelName: channel, message: `You left the channel [${channel}]`, timestamp: tools.now() });
@@ -153,6 +155,7 @@ var handlers = function (server, ircService, io) {
                     updateUsersInChannel(channel);
                     socket.broadcast.to(channel).emit("hasChangeNickname", {
                         nickname: "SERVER",
+                        channel: channel,
                         message: `${oldNickname} change is nickname to ${user.nickname} !`,
                         timestamp: tools.now()
                     });
@@ -221,12 +224,15 @@ var handlers = function (server, ircService, io) {
             user.channels.forEach(function (channel) {
                 ircService.leaveChannel(user, channel, function (err, msg) {
                     console.log(`[${tools.datetime()}] - ${user.nickname} left the channel ${channel} !`);
-                    updateUsersInChannel(channel);
-                    socket.broadcast.to(channel).emit("userLeftChannel", {
-                        nickname: "SERVER",
-                        message: `${user.nickname} has left the channel [${channel}]`,
-                        timestamp: tools.now()
-                    });
+                    if (ircService.channelExist(channel)) {
+                        updateUsersInChannel(channel);
+                        socket.broadcast.to(channel).emit("userLeftChannel", {
+                            nickname: "SERVER",
+                            channel: channel,
+                            message: `${user.nickname} has left the channel [${channel}]`,
+                            timestamp: tools.now()
+                        });
+                    }
                 });
             });
 

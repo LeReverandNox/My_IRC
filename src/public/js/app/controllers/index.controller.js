@@ -8,12 +8,13 @@
         .module("my_irc")
         .controller("Index", IndexController);
 
-    IndexController.$inject = ["$rootScope"];
+    IndexController.$inject = ["$rootScope", "$window"];
 
-    function IndexController($rootScope) {
+    function IndexController($rootScope, $window) {
         var I = this;
 
         I.title = "My_IRC";
+        I.focus = true;
 
         init();
 
@@ -22,6 +23,7 @@
                 name: channelName,
                 users: [],
                 messages: [],
+                unreadCount: 0,
                 active: false
             };
             I.channels.push(channel);
@@ -53,10 +55,30 @@
             return channel;
         };
 
+        I.incUnreadCount = function (channel) {
+            channel.unreadCount += 1;
+            I.updateUnreadCount();
+        };
+
+        I.resetUnreadCount = function (channel) {
+            channel.unreadCount = 0;
+            I.updateUnreadCount();
+        };
+
+        I.updateUnreadCount = function () {
+            var globalUnreadCount = 0;
+            I.channels.forEach(function (channel) {
+                globalUnreadCount += channel.unreadCount;
+            });
+            globalUnreadCount += I.personnalChannel.unreadCount;
+            $rootScope.$emit("updateUnreadCount", globalUnreadCount);
+        };
+
         function init() {
             I.channels = [];
             I.personnalChannel = {
-                messages: []
+                messages: [],
+                unreadCount: 0
             };
             I.currChannel = I.personnalChannel;
         }
@@ -69,5 +91,14 @@
         $rootScope.$on("disconnect", function (e) {
             init();
         });
+
+        $window.onfocus = function () {
+            I.focus = true;
+            I.resetUnreadCount(I.currChannel);
+        };
+
+        $window.onblur = function () {
+            I.focus = false;
+        };
     }
 } ());

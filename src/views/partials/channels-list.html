@@ -13,7 +13,7 @@
             ng-click="C.switchChannel(channel)"
             md-colors="{background: (channel.active ? 'accent' : 'grey-A100')}"
             class="disable-text-selection">
-            <p> {{ channel.name }} </p>
+            <p> {{ channel.name }} </p><span ng-if="channel.unreadCount > 0">({{ channel.unreadCount }})</span>
         </md-list-item>
         <md-list-item
             ng-if="channel.active"
