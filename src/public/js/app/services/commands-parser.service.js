@@ -74,6 +74,9 @@
             case "msg":
                 commandsService.sendPrivateMessage(arg1, arg2);
                 break;
+            case "help":
+                commandsService.listCommands();
+                break;
             default:
                 $rootScope.$emit("unknowCommand", { error: true, nickname: "", message: "Unknown command, please refer to /help.", timestamp: new Date().getTime() });
                 break;

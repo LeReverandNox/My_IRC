@@ -5,7 +5,7 @@
 
 var tools = require("./lib/tools");
 
-var handlers = function (server, ircService, io) {
+var handlers = function (ircService, io) {
     function updateUsersInChannel(channel) {
         return io.to(channel).emit("updateUsersInChannel", {
             error: false,
@@ -19,8 +19,9 @@ var handlers = function (server, ircService, io) {
         });
     }
 
-    return {
-        handleNewUser: function (socket) {
+    var handleNewUser = {
+        desc: null,
+        action: function (socket) {
             var baseNickname = tools.generateNickname();
             var nickname = baseNickname + tools.generateHash();
             while (ircService.isNicknameTaken(nickname)) {
@@ -34,8 +35,12 @@ var handlers = function (server, ircService, io) {
                 nickname: user.nickname,
                 timestamp: tools.now()
             });
-        },
-        joinChannel: function (channel, cb) {
+        }
+    };
+
+    var joinChannel = {
+        desc: "/join [channel] - Join the channel",
+        action: function (channel, cb) {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
 
@@ -59,8 +64,12 @@ var handlers = function (server, ircService, io) {
                 cb({ error: false, nickname: "", channelName: channel, message: `You join the channel [${channel}]`, timestamp: tools.now() });
                 return updateUsersInChannel(channel);
             });
-        },
-        leaveChannel: function (channel, cb) {
+        }
+    };
+
+    var leaveChannel = {
+        desc: "/leave [?channel] - Leave the current channel, or the one specified",
+        action: function (channel, cb) {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
 
@@ -81,8 +90,12 @@ var handlers = function (server, ircService, io) {
                 }
                 return cb({ error: false, nickname: "", channelName: channel, message: `You left the channel [${channel}]`, timestamp: tools.now() });
             });
-        },
-        listChannelUsers: function (channel, cb) {
+        }
+    };
+
+    var listChannelUsers = {
+        desc: "/users [?channel] - Get the list of users for the current channel, or for the one specified",
+        action: function (channel, cb) {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
 
@@ -110,8 +123,12 @@ var handlers = function (server, ircService, io) {
                 data: users,
                 timestamp: tools.now()
             });
-        },
-        listChannels: function (string, cb) {
+        }
+    };
+
+    var listChannels = {
+        desc: "/list [?string] - Get the list of all the channels, or containing the string",
+        action: function (string, cb) {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
 
@@ -134,8 +151,12 @@ var handlers = function (server, ircService, io) {
                 data: channels,
                 timestamp: tools.now()
             });
-        },
-        changeNickname: function (newNickname, cb) {
+        }
+    };
+
+    var changeNickname = {
+        desc: "/nick [nickname] - Change your nickname",
+        action: function (newNickname, cb) {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
             var oldNickname = user.nickname;
@@ -143,6 +164,9 @@ var handlers = function (server, ircService, io) {
             newNickname = newNickname.trim() || "";
             if (!newNickname) {
                 return cb({ error: true, nickname: "", message: "This nickname is too short !", timestamp: tools.now() });
+            }
+            if (newNickname.match(/\s+/)) {
+                return cb({ error: true, nickname: "", message: "Your nickname can't contain spaces !", timestamp: tools.now() });
             }
 
             ircService.changeUserNickname(user, newNickname, function (err, msg) {
@@ -162,8 +186,12 @@ var handlers = function (server, ircService, io) {
                 });
                 return cb({ error: false, nickname: "", message: msg || `You change your nickname from ${oldNickname} to ${user.nickname}`, timestamp: tools.now() });
             });
-        },
-        sendPrivateMessage: function (to, content, cb) {
+        }
+    };
+
+    var sendPrivateMessage = {
+        desc: "/msg [receiver] [content] - Send a private message to a connected user",
+        action: function (to, content, cb) {
             var socket = this;
             var fromUser = ircService.getUserBySocketId(socket.id);
 
@@ -185,8 +213,12 @@ var handlers = function (server, ircService, io) {
             });
             console.log(`[${tools.datetime()}] - ${fromUser.nickname} send a PM to ${toUser.nickname} !`);
             return cb({ error: false, nickname: `TO: ${toUser.nickname}`, message: content, timestamp: tools.now() });
-        },
-        sendMessage: function (channel, content, cb) {
+        }
+    };
+
+    var sendMessage = {
+        desc: null,
+        action: function (channel, content, cb) {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
 
@@ -216,8 +248,38 @@ var handlers = function (server, ircService, io) {
             });
             console.log(`[${tools.datetime()}] - ${user.nickname} send a message to channel [${channel}] !`);
             return cb({ error: false, nickname: "SERVER", message: `Your message was delivered`, timestamp: tools.now() });
-        },
-        disconnect: function () {
+        }
+    };
+
+    var listCommands = {
+        desc: "/help - Show the list of available commands",
+        action: function (cb) {
+            var socket = this;
+            var user = ircService.getUserBySocketId(socket.id);
+
+            var commands = handlers();
+            var commandList = Object.keys(commands).filter(function (fn) {
+                if (commands[fn].desc !== null) {
+                    return true;
+                }
+            }).map(function (fn) {
+                return commands[fn].desc;
+            });
+
+            console.log(`[${tools.datetime()}] - ${user.nickname} ask for the command list!`);
+            return cb({
+                error: false,
+                nickname: "SERVER",
+                message: "Here's the available command list :",
+                data: commandList,
+                timestamp: tools.now()
+            });
+        }
+    };
+
+    var disconnect = {
+        desc: null,
+        action: function () {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
 
@@ -239,6 +301,19 @@ var handlers = function (server, ircService, io) {
             console.log(`[${tools.datetime()}] - ${user.nickname} has left the server !`);
             return ircService.removeUser(user);
         }
+    };
+
+    return {
+        handleNewUser: handleNewUser,
+        joinChannel: joinChannel,
+        leaveChannel: leaveChannel,
+        listChannelUsers: listChannelUsers,
+        listChannels: listChannels,
+        changeNickname: changeNickname,
+        sendPrivateMessage: sendPrivateMessage,
+        sendMessage: sendMessage,
+        listCommands: listCommands,
+        disconnect: disconnect
     };
 };
 
