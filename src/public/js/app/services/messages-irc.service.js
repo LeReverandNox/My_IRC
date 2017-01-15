@@ -16,7 +16,8 @@
             sendMessage: sendMessage,
             randomGiphy: randomGiphy,
             meAction: meAction,
-            ameAction: ameAction
+            ameAction: ameAction,
+            sendMessageAll: sendMessageAll
         };
 
         function sendPrivateMessage(to, content, cb) {
@@ -37,6 +38,10 @@
 
         function ameAction(action, cb) {
             socketService.emit("ameAction", action, cb);
+        }
+
+        function sendMessageAll(content, cb) {
+            socketService.emit("sendMessageAll", content, cb);
         }
 
         socketService.on("receivePrivateMessage", function (data) {
