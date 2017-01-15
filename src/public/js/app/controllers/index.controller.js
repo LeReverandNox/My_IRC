@@ -55,14 +55,12 @@
             return channel;
         };
 
-        I.incUnreadCount = function (channelName) {
-            var channel = I.getChannelByName(channelName);
+        I.incUnreadCount = function (channel) {
             channel.unreadCount += 1;
             I.updateUnreadCount();
         };
 
-        I.resetUnreadCount = function (channelName) {
-            var channel = I.getChannelByName(channelName);
+        I.resetUnreadCount = function (channel) {
             channel.unreadCount = 0;
             I.updateUnreadCount();
         };
@@ -72,6 +70,7 @@
             I.channels.forEach(function (channel) {
                 globalUnreadCount += channel.unreadCount;
             });
+            globalUnreadCount += I.personnalChannel.unreadCount;
             $rootScope.$emit("updateUnreadCount", globalUnreadCount);
         };
 
@@ -95,9 +94,7 @@
 
         $window.onfocus = function () {
             I.focus = true;
-            if (I.currChannel.name) {
-                I.resetUnreadCount(I.currChannel.name);
-            }
+            I.resetUnreadCount(I.currChannel);
         };
 
         $window.onblur = function () {
