@@ -61,8 +61,12 @@
             var date = this.formatDate(data.timestamp);
             var nickname = this.formatNickname(data.nickname);
             var content = this.formatContent(data.message, data.data);
+            var attachment = data.attachment;
 
-            return `${date} ${nickname} ${content}`;
+            return {
+                text: `${date} ${nickname} ${content}`,
+                attachment: attachment
+            };
         }
 
         function formatDate(timestamp) {
