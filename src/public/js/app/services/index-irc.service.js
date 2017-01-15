@@ -12,11 +12,16 @@
 
     function indexIrcService(socketService, $rootScope) {
         var service = {
-            changeNickname: changeNickname
+            changeNickname: changeNickname,
+            listCommands: listCommands
         };
 
         function changeNickname(nickname, cb) {
             socketService.emit("changeNickname", nickname, cb);
+        }
+
+        function listCommands(cb) {
+            socketService.emit("listCommands", cb);
         }
 
         socketService.on("hasChangeNickname", function (data) {
