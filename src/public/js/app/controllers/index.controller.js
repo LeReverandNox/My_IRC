@@ -22,6 +22,7 @@
                 name: channelName,
                 users: [],
                 messages: [],
+                unreadCount: 0,
                 active: false
             };
             I.channels.push(channel);
