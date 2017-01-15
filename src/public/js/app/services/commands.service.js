@@ -21,7 +21,9 @@
             sendMessage: sendMessage,
             listCommands: listCommands,
             randomGiphy: randomGiphy,
-            meAction: meAction
+            meAction: meAction,
+            ameAction: ameAction,
+            sendMessageAll: sendMessageAll
         };
 
         return service;
@@ -94,6 +96,22 @@
             return messagesIrcService.meAction(channel, action, function (res) {
                 if (res.error) {
                     return $rootScope.$emit("selfMeAction", res);
+                }
+            });
+        }
+
+        function ameAction(action) {
+            return messagesIrcService.ameAction(action, function (res) {
+                if (res.error) {
+                    return $rootScope.$emit("selfAmeAction", res);
+                }
+            });
+        }
+
+        function sendMessageAll(content) {
+            return messagesIrcService.sendMessageAll(content, function (res) {
+                if (res.error) {
+                    return $rootScope.$emit("selfMessageAllSent", res);
                 }
             });
         }

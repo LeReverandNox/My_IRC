@@ -33,6 +33,8 @@ exports.register = function (server, options, next) {
         socket.on("sendMessage", handlers.sendMessage.action);
         socket.on("randomGiphy", handlers.randomGiphy.action);
         socket.on("meAction", handlers.meAction.action);
+        socket.on("ameAction", handlers.ameAction.action);
+        socket.on("sendMessageAll", handlers.sendMessageAll.action);
 
         socket.on("listCommands", handlers.listCommands.action);
 

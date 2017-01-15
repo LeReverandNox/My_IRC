@@ -35,6 +35,8 @@
         $rootScope.$on("listCommands", displayMessage);
         $rootScope.$on("giphyError", displayMessage);
         $rootScope.$on("selfMeAction", displayMessage);
+        $rootScope.$on("selfAmeAction", displayMessage);
+        $rootScope.$on("selfMessageAllSent", displayMessage);
         $rootScope.$on("unknowCommand", displayMessage);
 
         function displayMessage(e, data) {
