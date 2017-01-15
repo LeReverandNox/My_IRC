@@ -57,11 +57,21 @@
         I.incUnreadCount = function (channelName) {
             var channel = I.getChannelByName(channelName);
             channel.unreadCount += 1;
+            I.updateUnreadCount();
         };
 
         I.resetUnreadCount = function (channelName) {
             var channel = I.getChannelByName(channelName);
             channel.unreadCount = 0;
+            I.updateUnreadCount();
+        };
+
+        I.updateUnreadCount = function () {
+            var globalUnreadCount = 0;
+            I.channels.forEach(function (channel) {
+                globalUnreadCount += channel.unreadCount;
+            });
+            $rootScope.$emit("updateUnreadCount", globalUnreadCount);
         };
 
         function init() {

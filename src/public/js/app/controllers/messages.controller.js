@@ -43,9 +43,9 @@
             if (channelName) {
                 var channel = I.getChannelByName(channelName);
                 channel.messages.push(message);
-                // if (channelName !== I.currChannel.name) {
+                if (channelName !== I.currChannel.name) {
                     I.incUnreadCount(channelName);
-                // }
+                }
             } else {
                 I.currChannel.messages.push(message);
             }

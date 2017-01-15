@@ -2,7 +2,7 @@
 <html lang="en" ng-app="my_irc" ng-controller="Title as T">
 <head>
     <meta charset="UTF-8">
-    <title>My_IRC</title>
+    <title>{{ T.appTitle }} {{ T.unreadCount > 0 ? "(" + T.unreadCount + ")" : "" }}</title>
 
     <base href="/">
 
