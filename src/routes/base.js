@@ -2,13 +2,16 @@
 /*global this*/
 
 "use strict";
+const config = require("../config");
 
 const baseRoutes = [
     {
         method: "GET",
         path: "/",
         handler: function (request, reply) {
-            reply.view("index");
+            reply.view("index", {
+                applicationEnv: config.applicationEnv
+            });
         }
     },
     {
