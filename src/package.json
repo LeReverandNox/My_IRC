@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "forever --minUptime 1 -c 'nodemon -e js,ejs --exitcrash' app.js"
+    "start": "grunt && forever --minUptime 1 -c 'nodemon -e js,ejs --exitcrash' app.js"
   },
   "author": "laidet_r",
   "license": "ISC",
@@ -19,5 +19,11 @@
     "request": "^2.79.0",
     "socket.io": "^1.7.2",
     "vision": "^4.1.1"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-cssmin": "^1.0.2",
+    "grunt-contrib-uglify": "^2.0.0"
   }
 }
