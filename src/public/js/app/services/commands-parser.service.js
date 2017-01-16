@@ -26,7 +26,6 @@
         }
 
         function parse(string) {
-            var results = [];
             var cmd, arg1, arg2;
 
             if (string.match(/^\//)) {
@@ -37,7 +36,7 @@
                 arg1 = arg1Matches ? arg1Matches[1] : "";
 
                 var arg2Matches = string.match(/^(?:[^\s]*\s){2}(.*)/);
-                arg2= arg2Matches ? arg2Matches[1] : "";
+                arg2 = arg2Matches ? arg2Matches[1] : "";
             } else {
                 cmd = null;
                 arg1 = string;
