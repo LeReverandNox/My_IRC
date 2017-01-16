@@ -6,15 +6,13 @@ module.exports = function (grunt) {
     grunt.initConfig({
         cssmin: {
             dist: {
-                target: {
-                    files: [{
-                        expand: true,
-                        cwd: 'public/css',
-                        src: ['*.css'],
-                        dest: 'public_dist/css',
-                        ext: '.min.css'
-                    }]
-                }
+                files: [{
+                    expand: true,
+                    cwd: 'public/css',
+                    src: ['**/*.css'],
+                    dest: 'public_dist/css',
+                    ext: '.min.css'
+                }]
             }
         },
         concat: {
