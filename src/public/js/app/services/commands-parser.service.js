@@ -22,7 +22,7 @@
         function go(string, currChannelName) {
             string = string.trim();
             var results = this.parse(string);
-            this.decide(results.cmd, results.arg1, results.arg2, currChannelName);
+            this.decide(results.cmd, results.arg1, results.arg2, currChannelName, string);
         }
 
         function parse(string) {
@@ -50,7 +50,11 @@
             };
         }
 
-        function decide(cmd, arg1, arg2, currChannelName) {
+        function decide(cmd, arg1, arg2, currChannelName, originalString) {
+            if (cmd !== null) {
+                $rootScope.$emit("addToHistory", originalString);
+            }
+
             switch (cmd) {
             case null:
                 commandsService.sendMessage(currChannelName, arg1);
