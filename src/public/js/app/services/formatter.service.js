@@ -48,12 +48,12 @@
             secondes = this.leftPadDate(secondes);
 
             return {
-                year,
-                month,
-                day,
-                hours,
-                minutes,
-                secondes
+                year: year,
+                month: month,
+                day: day,
+                hours: hours,
+                minutes: minutes,
+                secondes: secondes
             };
         }
 
@@ -64,18 +64,18 @@
             var attachment = data.attachment;
 
             return {
-                text: `${date} ${nickname} ${content}`,
+                text: date + " " + nickname + " " + content,
                 attachment: attachment
             };
         }
 
         function formatDate(timestamp) {
             var dateObjs = this.computeDate(timestamp);
-            return `${dateObjs.hours}:${dateObjs.minutes}:${dateObjs.secondes}`;
+            return dateObjs.hours + ":" + dateObjs.minutes + ":" + dateObjs.secondes;
         }
 
         function formatNickname(nickname) {
-            return nickname.length > 0 ? `<${nickname}>` : "";
+            return nickname.length > 0 ? "<" + nickname + ">" : "";
         }
 
         function formatContent(content, data) {
@@ -83,7 +83,7 @@
 
             if (data) {
                 data.forEach(function (el) {
-                    content = `${content} \n\r - ${el}`;
+                    content = content + "\n\r - " + el;
                 });
             }
 
