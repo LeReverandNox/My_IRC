@@ -16,10 +16,19 @@
 
         Co.title = "Commands";
         Co.command = "";
+        Co.commandHistory = [];
 
         Co.submitCommand = function () {
             commandsParserService.go(Co.command, I.currChannel.name);
             Co.command = "";
         };
+
+        $rootScope.$on("addToHistory", function (e, string) {
+            addToHistory(string);
+        });
+
+        function addToHistory(cmd) {
+            Co.commandHistory.unshift(cmd);
+        }
     }
 } ());
