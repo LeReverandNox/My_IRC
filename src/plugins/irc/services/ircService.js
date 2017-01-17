@@ -126,7 +126,7 @@ var ircService = function (server, io) {
             return server.irc.users.filter(checkNicknames).length > 0 ? true : false;
         },
         isUserInChannel: function (user, channel) {
-            return user.socket.rooms[channel] ? true : false;
+            return user.channels[user.channels.indexOf(channel)] ? true : false;
         },
         getUserInfos: function (user) {
             var channels = user.channels.join(" ");

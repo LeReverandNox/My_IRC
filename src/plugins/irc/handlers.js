@@ -477,7 +477,8 @@ var handlers = function (ircService, io) {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
 
-            user.channels.forEach(function (channel) {
+            var channels = user.channels.slice();
+            channels.forEach(function (channel) {
                 ircService.leaveChannel(user, channel, function (err, msg) {
                     console.log(`[${tools.datetime()}] - ${user.nickname} left the channel ${channel} !`);
                     if (ircService.channelExist(channel)) {
