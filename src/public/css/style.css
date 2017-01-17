@@ -24,3 +24,14 @@
 .animate-show-hide.custom-hidden-remove {
     transition: all linear 0.1s;
 }
+
+md-list-item.small-list,
+md-list-item .md-list-item-inner.small-list{
+    min-height: 15px;
+    height: auto;
+}
+
+md-list-item.small-list::before,
+md-list-item .md-list-item-inner.small-list::before {
+    min-height: 15px;
+}
