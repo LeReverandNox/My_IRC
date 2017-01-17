@@ -7,7 +7,8 @@
     angular.module("my_irc", [
         "ngMaterial",
         "ui.router",
-        "btford.socket-io"
+        "btford.socket-io",
+        "luegg.directives"
     ]);
 
 }());
