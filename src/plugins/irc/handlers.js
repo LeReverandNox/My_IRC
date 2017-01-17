@@ -408,7 +408,7 @@ var handlers = function (ircService, io) {
     };
 
     var whois = {
-        desc: "/whois [nickname]",
+        desc: "/whois [nickname] - Get informations about a user",
         action: function (nickname, cb) {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
