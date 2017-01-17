@@ -39,7 +39,7 @@ var handlers = function (ircService, io) {
     };
 
     var joinChannel = {
-        desc: "/join [channel] - Join the channel",
+        desc: "/join #[channel] - Join the channel",
         action: function (channel, cb) {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
@@ -47,6 +47,10 @@ var handlers = function (ircService, io) {
             channel = channel.trim() || "";
             if (!channel) {
                 return cb({ error: true, nickname: "", message: "This channel name is too short !", timestamp: tools.now() });
+            }
+            if (!channel.match(/^#/)) {
+                return cb({ error: true, nickname: "", message: "The channel name must start with a # !", timestamp: tools.now() });
+
             }
 
             ircService.joinChannel(user, channel, function (err, msg) {
