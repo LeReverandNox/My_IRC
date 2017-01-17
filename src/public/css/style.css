@@ -8,7 +8,8 @@
 }
 
 .angular-with-newlines {
-    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 .custom-hidden {
