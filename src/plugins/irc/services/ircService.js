@@ -21,6 +21,7 @@ var ircService = function (server, io) {
                 nickname: nickname,
                 socketId: socket.id,
                 socket: socket,
+                ip: socket.handshake.headers["x-real-ip"],
                 channels: []
             };
             server.irc.users.push(user);
@@ -121,6 +122,11 @@ var ircService = function (server, io) {
         },
         isUserInChannel: function (user, channel) {
             return user.socket.rooms[channel] ? true : false;
+        },
+        getUserInfos: function (user) {
+            return [
+                `IP address : ${user.ip}`
+            ];
         }
     };
 };

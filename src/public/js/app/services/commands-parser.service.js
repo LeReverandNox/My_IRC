@@ -92,6 +92,9 @@
             case "amsg":
                 commandsService.sendMessageAll(arg1.concat(" ", arg2));
                 break;
+            case "whois":
+                commandsService.whois(arg1);
+                break;
             default:
                 $rootScope.$emit("unknowCommand", { error: true, nickname: "", message: "Unknown command, please refer to /help.", timestamp: new Date().getTime() });
                 break;

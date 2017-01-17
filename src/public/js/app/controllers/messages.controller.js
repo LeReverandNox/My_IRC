@@ -37,6 +37,7 @@
         $rootScope.$on("selfMeAction", displayMessage);
         $rootScope.$on("selfAmeAction", displayMessage);
         $rootScope.$on("selfMessageAllSent", displayMessage);
+        $rootScope.$on("whois", displayMessage);
         $rootScope.$on("unknowCommand", displayMessage);
 
         function displayMessage(e, data) {

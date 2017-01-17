@@ -407,6 +407,33 @@ var handlers = function (ircService, io) {
         }
     };
 
+    var whois = {
+        desc: "/whois [nickname] - Get informations about a user",
+        action: function (nickname, cb) {
+            var socket = this;
+            var user = ircService.getUserBySocketId(socket.id);
+
+            nickname = nickname.trim() || "";
+            if (!nickname) {
+                return cb({ error: true, nickname: "", message: `You need to specify a nickname .`, timestamp: tools.now() });
+            }
+            var targetUser = ircService.getUserByNickname(nickname);
+            if (!targetUser) {
+                return cb({ error: true, nickname: "", message: `The user ${nickname} doesn't exist.`, timestamp: tools.now() });
+            }
+
+            var infos = ircService.getUserInfos(targetUser);
+            console.log(`[${tools.datetime()}] - ${user.nickname} ask for informations about ${targetUser.nickname} !`);
+            return cb({
+                error: false,
+                nickname: "SERVER",
+                message: `Here's some informations about ${targetUser.nickname} :`,
+                data: infos,
+                timestamp: tools.now()
+            });
+        }
+    };
+
     var disconnect = {
         desc: null,
         action: function () {
@@ -447,6 +474,7 @@ var handlers = function (ircService, io) {
         meAction: meAction,
         ameAction: ameAction,
         sendMessageAll: sendMessageAll,
+        whois: whois,
         disconnect: disconnect
     };
 };
