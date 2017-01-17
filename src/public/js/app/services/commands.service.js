@@ -23,7 +23,8 @@
             randomGiphy: randomGiphy,
             meAction: meAction,
             ameAction: ameAction,
-            sendMessageAll: sendMessageAll
+            sendMessageAll: sendMessageAll,
+            whois: whois
         };
 
         return service;
@@ -113,6 +114,12 @@
                 if (res.error) {
                     return $rootScope.$emit("selfMessageAllSent", res);
                 }
+            });
+        }
+
+        function whois(nickname) {
+            return indexIrcService.whois(nickname, function (res) {
+                return $rootScope.$emit("whois", res);
             });
         }
     }
