@@ -172,8 +172,12 @@ var handlers = function (ircService, io) {
             if (!newNickname) {
                 return cb({ error: true, nickname: "", message: "This nickname is too short !", timestamp: tools.now() });
             }
-            if (newNickname.match(/\s+/)) {
-                return cb({ error: true, nickname: "", message: "Your nickname can't contain spaces !", timestamp: tools.now() });
+            if (!newNickname.match(/^[a-zA-Z0-9]+$/)) {
+                return cb({ error: true, nickname: "", message: "Your nickname must be alphanumerical.", timestamp: tools.now() });
+            }
+            if (newNickname.length > 20) {
+                return cb({ error: true, nickname: "", message: "Your nickname is too long.", timestamp: tools.now() });
+
             }
 
             ircService.changeUserNickname(user, newNickname, function (err, msg) {
