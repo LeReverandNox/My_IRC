@@ -246,6 +246,8 @@ var handlers = function (ircService, io) {
                 channel: channel,
                 timestamp: tools.now()
             });
+            user.messageCount += 1;
+
             console.log(`[${tools.datetime()}] - ${user.nickname} send a message to channel [${channel}] !`);
             return cb({ error: false, nickname: "SERVER", message: `Your message was delivered`, timestamp: tools.now() });
         }
@@ -402,6 +404,7 @@ var handlers = function (ircService, io) {
                     channel: channel,
                     timestamp: tools.now()
                 });
+                user.messageCount += 1;
             });
             return cb({ error: false, nickname: "SERVER", message: `Your global message was delivered`, timestamp: tools.now() });
         }

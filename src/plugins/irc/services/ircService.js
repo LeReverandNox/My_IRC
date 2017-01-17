@@ -22,6 +22,7 @@ var ircService = function (server, io) {
                 socketId: socket.id,
                 socket: socket,
                 ip: socket.handshake.headers["x-real-ip"],
+                messageCount: 0,
                 channels: []
             };
             server.irc.users.push(user);
