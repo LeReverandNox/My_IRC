@@ -48,8 +48,11 @@ var handlers = function (ircService, io) {
             if (!channel) {
                 return cb({ error: true, nickname: "", message: "This channel name is too short !", timestamp: tools.now() });
             }
-            if (!channel.match(/^#/)) {
-                return cb({ error: true, nickname: "", message: "The channel name must start with a # !", timestamp: tools.now() });
+            if (!channel.match(/^#[^#\s][A-Za-z0-9]+$/)) {
+                return cb({ error: true, nickname: "", message: "The channel name must start with a # an be alpha-numerical.", timestamp: tools.now() });
+            }
+            if (channel.length > 20) {
+                return cb({ error: true, nickname: "", message: "This channel name is too long.", timestamp: tools.now() });
 
             }
 
@@ -62,10 +65,10 @@ var handlers = function (ircService, io) {
                 socket.broadcast.to(channel).emit("userJoinChannel", {
                     nickname: "SERVER",
                     channel: channel,
-                    message: `${user.nickname} join the channel [${channel}]`,
+                    message: `${user.nickname} join the channel ${channel}`,
                     timestamp: tools.now()
                 });
-                cb({ error: false, nickname: "", channelName: channel, message: `You join the channel [${channel}]`, timestamp: tools.now() });
+                cb({ error: false, nickname: "", channelName: channel, message: `You join the channel ${channel}`, timestamp: tools.now() });
                 return updateUsersInChannel(channel);
             });
         }
@@ -87,12 +90,12 @@ var handlers = function (ircService, io) {
                     socket.broadcast.to(channel).emit("userLeftChannel", {
                         nickname: "SERVER",
                         channel: channel,
-                        message: `${user.nickname} has left the channel [${channel}]`,
+                        message: `${user.nickname} has left the channel ${channel}`,
                         timestamp: tools.now()
                     });
                     updateUsersInChannel(channel);
                 }
-                return cb({ error: false, nickname: "", channelName: channel, message: `You left the channel [${channel}]`, timestamp: tools.now() });
+                return cb({ error: false, nickname: "", channelName: channel, message: `You left the channel ${channel}`, timestamp: tools.now() });
             });
         }
     };
@@ -119,11 +122,11 @@ var handlers = function (ircService, io) {
             }
 
             var users = ircService.listChannelUsers(channel);
-            console.log(`[${tools.datetime()}] - ${user.nickname} ask for channel [${channel}] users list!`);
+            console.log(`[${tools.datetime()}] - ${user.nickname} ask for channel ${channel} users list!`);
             return cb({
                 error: false,
                 nickname: "SERVER",
-                message: `Here the user list for the channel [${channel}] :`,
+                message: `Here the user list for the channel ${channel} :`,
                 data: users,
                 timestamp: tools.now()
             });
