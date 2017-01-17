@@ -95,6 +95,9 @@
             case "whois":
                 commandsService.whois(arg1);
                 break;
+            case "ausers":
+                commandsService.listServerUsers();
+                break;
             default:
                 $rootScope.$emit("unknowCommand", { error: true, nickname: "", message: "Unknown command, please refer to /help.", timestamp: new Date().getTime() });
                 break;
