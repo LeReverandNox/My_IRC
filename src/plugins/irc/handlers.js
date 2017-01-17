@@ -46,9 +46,9 @@ var handlers = function (ircService, io) {
 
             channel = channel.trim() || "";
             if (!channel) {
-                return cb({ error: true, nickname: "", message: "This channel name is too short !", timestamp: tools.now() });
+                return cb({ error: true, nickname: "", message: "You must specify a channel name.", timestamp: tools.now() });
             }
-            if (!channel.match(/^#[^#\s][A-Za-z0-9]+$/)) {
+            if (!channel.match(/^#[A-Za-z0-9]+$/)) {
                 return cb({ error: true, nickname: "", message: "The channel name must start with a # an be alpha-numerical.", timestamp: tools.now() });
             }
             if (channel.length > 20) {
