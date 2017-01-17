@@ -8,7 +8,8 @@
 }
 
 .angular-with-newlines {
-    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 .custom-hidden {
@@ -23,4 +24,19 @@
 .animate-show-hide.custom-hidden-add,
 .animate-show-hide.custom-hidden-remove {
     transition: all linear 0.1s;
+}
+
+md-list-item.small-list,
+md-list-item .md-list-item-inner.small-list{
+    min-height: 15px;
+    height: auto;
+}
+
+md-list-item.small-list::before,
+md-list-item .md-list-item-inner.small-list::before {
+    min-height: 15px;
+}
+
+.centered {
+    text-align: center;
 }

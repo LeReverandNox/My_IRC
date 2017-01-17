@@ -1,14 +1,16 @@
 <md-list ng-cloak>
 
-    <md-subheader class="md-no-sticky">{{ M.title }}</md-subheader>
+    <md-subheader class="md-no-sticky centered">{{ M.title }}</md-subheader>
 
-    <div ng-repeat="message in I.currChannel.messages">
-        <md-list-item layout="column" layout-align="none">
-            <p class="angular-with-newlines"> {{ message.text }} </p>
-            <div ng-if="message.attachment">
-                <img ng-src="{{ message.attachment }}"/>
-            </div>
-        </md-list-item>
-    </div>
+    <md-content scroll-glue>
+        <div ng-repeat="message in I.currChannel.messages">
+            <md-list-item layout="column" layout-align="none" class="small-list">
+                <p class="angular-with-newlines"> {{ message.text }} </p>
+                <div ng-if="message.attachment">
+                    <img ng-src="{{ message.attachment }}"/>
+                </div>
+            </md-list-item>
+        </div>
+    </md-content>
 
 </md-list>
