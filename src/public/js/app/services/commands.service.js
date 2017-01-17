@@ -24,7 +24,8 @@
             meAction: meAction,
             ameAction: ameAction,
             sendMessageAll: sendMessageAll,
-            whois: whois
+            whois: whois,
+            listServerUsers: listServerUsers
         };
 
         return service;
@@ -120,6 +121,12 @@
         function whois(nickname) {
             return indexIrcService.whois(nickname, function (res) {
                 return $rootScope.$emit("whois", res);
+            });
+        }
+
+        function listServerUsers() {
+            return indexIrcService.listServerUsers(function (res) {
+                return $rootScope.$emit("listServerUsers", res);
             });
         }
     }

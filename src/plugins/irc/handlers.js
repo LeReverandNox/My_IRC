@@ -441,6 +441,27 @@ var handlers = function (ircService, io) {
         }
     };
 
+    var listServerUsers = {
+        desc: "/ausers - List all users connected to the server",
+        action: function (cb) {
+            var socket = this;
+            var user = ircService.getUserBySocketId(socket.id);
+
+            var users = ircService.listServerUsers().map(function (user) {
+                return user.nickname;
+            });
+
+            console.log(`[${tools.datetime()}] - ${user.nickname} ask for the whole users list!`);
+            return cb({
+                error: false,
+                nickname: "SERVER",
+                message: "Here's the list of all users connected to the server :",
+                data: users,
+                timestamp: tools.now()
+            });
+        }
+    };
+
     var disconnect = {
         desc: null,
         action: function () {
@@ -482,6 +503,7 @@ var handlers = function (ircService, io) {
         ameAction: ameAction,
         sendMessageAll: sendMessageAll,
         whois: whois,
+        listServerUsers: listServerUsers,
         disconnect: disconnect
     };
 };

@@ -14,7 +14,8 @@
         var service = {
             changeNickname: changeNickname,
             listCommands: listCommands,
-            whois: whois
+            whois: whois,
+            listServerUsers: listServerUsers
         };
 
         function changeNickname(nickname, cb) {
@@ -27,6 +28,10 @@
 
         function whois(nickname, cb) {
             socketService.emit("whois", nickname, cb);
+        }
+
+        function listServerUsers(cb) {
+            socketService.emit("listServerUsers", cb);
         }
 
         socketService.on("hasChangeNickname", function (data) {
