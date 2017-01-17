@@ -25,6 +25,7 @@ exports.register = function (server, options, next) {
          * Users
          */
         socket.on("changeNickname", handlers.changeNickname.action);
+        socket.on("whois", handlers.whois.action);
 
         /*
          * Messages
