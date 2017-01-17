@@ -2,10 +2,12 @@
 
     <md-subheader class="md-no-sticky centered">{{ U.title }}</md-subheader>
 
-    <div ng-repeat="user in I.currChannel.users">
-        <md-list-item>
-            <p> {{ user }} </p>
-        </md-list-item>
-    </div>
+    <md-content scroll-glue>
+        <div ng-repeat="user in I.currChannel.users">
+            <md-list-item layout="column" layout-align="none" class="small-list">
+                <p class="angular-with-newlines"> {{ user }} </p>
+            </md-list-item>
+        </div>
+    </md-content>
 
 </md-list>

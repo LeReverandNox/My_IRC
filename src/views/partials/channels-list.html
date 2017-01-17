@@ -7,21 +7,25 @@
         <p> You're currently not in any channel.</p>
     </md-list-item>
 
-    <div ng-repeat="channel in I.channels">
-        <md-list-item
-            ng-if="!channel.active"
-            ng-click="C.switchChannel(channel)"
-            md-colors="{background: (channel.active ? 'accent' : 'grey-A100')}"
-            class="disable-text-selection">
-            <p> {{ channel.name }} </p><span ng-if="channel.unreadCount > 0">({{ channel.unreadCount }})</span>
-        </md-list-item>
-        <md-list-item
-            ng-if="channel.active"
-            md-colors="{background: (channel.active ? 'accent' : 'grey-A100')}"
-            class="disable-text-selection">
-            <p> {{ channel.name }} </p>
-        </md-list-item>
-        <md-divider></md-divider>
-    </div>
+    <md-content scroll-glue>
+        <div ng-repeat="channel in I.channels">
+            <md-list-item
+                ng-if="!channel.active"
+                ng-click="C.switchChannel(channel)"
+                md-colors="{background: (channel.active ? 'accent' : 'grey-A100')}"
+                class="disable-text-selection"
+                layout-align="center center">
+                <p class="angular-with-newlines"> {{ channel.name }} </p><span ng-if="channel.unreadCount > 0">({{ channel.unreadCount }})</span>
+            </md-list-item>
+            <md-list-item
+                ng-if="channel.active"
+                md-colors="{background: (channel.active ? 'accent' : 'grey-A100')}"
+                class="disable-text-selection"
+                layout-align="center center">
+                <p class="angular-with-newlines"> {{ channel.name }} </p>
+            </md-list-item>
+            <md-divider></md-divider>
+        </div>
+    </md-content>
 
 </md-list>
