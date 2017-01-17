@@ -35,3 +35,7 @@ md-list-item.small-list::before,
 md-list-item .md-list-item-inner.small-list::before {
     min-height: 15px;
 }
+
+.centered {
+    text-align: center;
+}
