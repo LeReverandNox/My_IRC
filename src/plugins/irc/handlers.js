@@ -75,7 +75,7 @@ var handlers = function (ircService, io) {
     };
 
     var leaveChannel = {
-        desc: "/leave [?channel] - Leave the current channel, or the one specified",
+        desc: "/part [?channel] - Leave the current channel, or the one specified",
         action: function (channel, cb) {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);

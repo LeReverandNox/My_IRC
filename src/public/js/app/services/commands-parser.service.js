@@ -62,7 +62,7 @@
             case "join":
                 commandsService.joinChannel(arg1);
                 break;
-            case "leave":
+            case "part":
                 commandsService.leaveChannel(arg1 || currChannelName);
                 break;
             case "nick":
