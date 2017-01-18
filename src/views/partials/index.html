@@ -1,15 +1,15 @@
-<div ng-cloak>
-    <md-toolbar class="md-tall md-primary" layout="row" layout-align="center start" style="min-height:200px">
+<div ng-cloak class="page">
+    <md-toolbar class="md-tall md-primary" layout="row" layout-align="center start" style="min-height:200px" class="page-header">
         <h1>
             <span class="md-display-3">{{ I.title }}</span>
         </h1>
     </md-toolbar>
-    <span class="md-accent">{{ I.message }}</span>
+    <span class="md-accent" style="text-align: center;">{{ I.message }}</span>
 
-    <div layout="row" layout-wrap>
+    <div layout="row" layout-wrap class="page-content">
         <channels-list flex="20"></channels-list>
-        <messages-list flex="60"></messages-list>
+        <messages-list flex="60" style="height: 100%;"></messages-list>
         <users-list flex="20"></users-list>
     </div>
-    <commands-box></commands-box>
+    <commands-box class="page-footer"></commands-box>
 </div>

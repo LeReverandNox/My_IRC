@@ -35,7 +35,7 @@
                 var arg1Matches = string.match(/\s(.[^\s]*)/);
                 arg1 = arg1Matches ? arg1Matches[1] : "";
 
-                var arg2Matches = string.match(/^(?:[^\s]*\s){2}(.*)/);
+                var arg2Matches = string.match(/^(?:[^\s]*\s){2}([^]*)/);
                 arg2 = arg2Matches ? arg2Matches[1] : "";
             } else {
                 cmd = null;
@@ -62,7 +62,7 @@
             case "join":
                 commandsService.joinChannel(arg1);
                 break;
-            case "leave":
+            case "part":
                 commandsService.leaveChannel(arg1 || currChannelName);
                 break;
             case "nick":

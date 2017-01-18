@@ -75,7 +75,7 @@ var handlers = function (ircService, io) {
     };
 
     var leaveChannel = {
-        desc: "/leave [?channel] - Leave the current channel, or the one specified",
+        desc: "/part [?channel] - Leave the current channel, or the one specified",
         action: function (channel, cb) {
             var socket = this;
             var user = ircService.getUserBySocketId(socket.id);
@@ -279,6 +279,14 @@ var handlers = function (ircService, io) {
                 }
             }).map(function (fn) {
                 return commands[fn].desc;
+            }).sort(function (a, b) {
+                if (a < b) {
+                    return -1;
+                }
+                if (a > b) {
+                    return 1;
+                }
+                return 0;
             });
 
             console.log(`[${tools.datetime()}] - ${user.nickname} ask for the command list!`);

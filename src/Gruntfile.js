@@ -20,12 +20,7 @@ module.exports = function (grunt) {
                 src: [
                     "public/js/app/my_irc.module.js",
                     "public/js/app/my_irc.route.js",
-                    "public/js/app/config/*.js",
-                    "public/js/app/config/*.js",
-                    "public/js/app/controllers/*.js",
-                    "public/js/app/directives/*.js",
-                    "public/js/app/filters/*.js",
-                    "public/js/app/services/*.js"
+                    "public/js/app/**/*.js"
                 ],
                 dest: "public_dist/js/app/my_irc.min.js"
             }
