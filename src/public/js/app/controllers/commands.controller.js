@@ -26,10 +26,18 @@
         };
 
         Co.keyCatcher = function ($event) {
-            if ($event.keyCode === 38) {
+            var keyCode = $event.keyCode;
+
+            if (keyCode === 13) {
+                if (!$event.shiftKey) {
+                    $event.preventDefault();
+                    Co.submitCommand();
+                }
+            }
+            if (keyCode === 38) {
                 rewindHistory("up", $event);
             }
-            if ($event.keyCode === 40) {
+            if (keyCode === 40) {
                 rewindHistory("down", $event);
             }
         };
