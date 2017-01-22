@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "angular": "registry:dt/angular#1.5.0+20170103054634",
-    "hapi": "registry:dt/hapi#13.0.0+20161121214052"
-  }
-}
