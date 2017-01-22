@@ -9,8 +9,8 @@
                 <div ng-if="message.attachment">
                     <img ng-src="{{ message.attachment }}"/>
                 </div>
-                <div ng-if="message.video">
-                    <youtube-video video-url="message.video"></youtube-video>
+                <div ng-if="message.videoId">
+                    <youtube-video video-id="message.videoId"></youtube-video>
                 </div>
             </md-list-item>
         </div>
