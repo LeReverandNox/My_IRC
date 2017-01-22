@@ -9,7 +9,8 @@
         "ngSanitize",
         "ui.router",
         "btford.socket-io",
-        "luegg.directives"
+        "luegg.directives",
+        "youtube-embed"
     ]);
 
 }());
