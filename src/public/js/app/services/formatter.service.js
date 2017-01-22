@@ -83,7 +83,7 @@
 
             if (data) {
                 data.forEach(function (el) {
-                    content = content + "\n\r - " + el;
+                    content = content + "\n - " + el;
                 });
             }
 
