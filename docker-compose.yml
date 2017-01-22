@@ -7,7 +7,6 @@ services:
             - ./src:/src
         environment:
             - VIRTUAL_HOST=$IRC_HOST
-            - SERVER_PORT=$SERVER_PORT
             - GIPHY_API_KEY=$GIPHY_API_KEY
             - GIPHY_BASE_URL=$GIPHY_BASE_URL
             - APPLICATION_ENV=$APPLICATION_ENV
