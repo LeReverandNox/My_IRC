@@ -15,7 +15,8 @@
             format: format,
             formatDate: formatDate,
             formatNickname: formatNickname,
-            formatContent: formatContent
+            formatContent: formatContent,
+            getYoutubeLinks: getYoutubeLinks
         };
 
         return service;
@@ -62,10 +63,12 @@
             var nickname = this.formatNickname(data.nickname);
             var content = this.formatContent(data.message, data.data);
             var attachment = data.attachment;
+            var video = this.getYoutubeLinks(content);
 
             return {
                 text: date + " " + nickname + " " + content,
-                attachment: attachment
+                attachment: attachment,
+                video: video
             };
         }
 
@@ -88,6 +91,13 @@
             }
 
             return content;
+        }
+
+        function getYoutubeLinks(content) {
+            var ytRegex = /(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/;
+            var links = content.match(ytRegex);
+
+            return links !== null ? links[0] : null;
         }
     }
 } ());
