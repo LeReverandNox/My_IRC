@@ -333,6 +333,8 @@ var handlers = function (ircService, io) {
                     channel: channel,
                     timestamp: tools.now()
                 });
+                user.messageCount += 1;
+
                 console.log(`[${tools.datetime()}] - ${user.nickname} send a gif to channel [${channel}] !`);
                 return cb({ error: false, nickname: "SERVER", message: `Your gif was delivered`, timestamp: tools.now() });
             });
