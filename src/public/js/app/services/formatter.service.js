@@ -16,7 +16,7 @@
             formatDate: formatDate,
             formatNickname: formatNickname,
             formatContent: formatContent,
-            getYoutubeLinks: getYoutubeLinks
+            getYoutubeVideoId: getYoutubeVideoId
         };
 
         return service;
@@ -63,12 +63,12 @@
             var nickname = this.formatNickname(data.nickname);
             var content = this.formatContent(data.message, data.data);
             var attachment = data.attachment;
-            var video = this.getYoutubeLinks(content);
+            var videoId = this.getYoutubeVideoId(content);
 
             return {
                 text: date + " " + nickname + " " + content,
                 attachment: attachment,
-                video: video
+                videoId: videoId
             };
         }
 
@@ -93,11 +93,11 @@
             return content;
         }
 
-        function getYoutubeLinks(content) {
-            var ytRegex = /(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/;
-            var links = content.match(ytRegex);
+        function getYoutubeVideoId(content) {
+            var ytRegex = /(?:youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v\=))|youtu\.be\/)([a-zA-Z0-9_-]{6,11})/;
+            var matches = content.match(ytRegex);
 
-            return links !== null ? links[0] : null;
+            return matches !== null ? matches[1] : null;
         }
     }
 } ());
