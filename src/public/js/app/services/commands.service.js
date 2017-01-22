@@ -25,7 +25,8 @@
             ameAction: ameAction,
             sendMessageAll: sendMessageAll,
             whois: whois,
-            listServerUsers: listServerUsers
+            listServerUsers: listServerUsers,
+            getUptime: getUptime
         };
 
         return service;
@@ -127,6 +128,12 @@
         function listServerUsers() {
             return indexIrcService.listServerUsers(function (res) {
                 return $rootScope.$emit("listServerUsers", res);
+            });
+        }
+
+        function getUptime() {
+            return indexIrcService.getUptime(function (res) {
+                return $rootScope.$emit("getUptime", res);
             });
         }
     }

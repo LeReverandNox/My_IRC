@@ -31,6 +31,13 @@ const baseRoutes = [
                 path: "public/js/lib"
             }
         }
+    },
+    {
+        method: "GET",
+        path: "/favicon.ico",
+        handler: {
+            file: "public/images/favicon.ico"
+        }
     }
 ];
 

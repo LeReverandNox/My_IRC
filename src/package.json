@@ -16,6 +16,7 @@
     "hapi": "^16.1.0",
     "inert": "^4.1.0",
     "nodemon": "^1.11.0",
+    "readable-timespan": "^1.2.0",
     "request": "^2.79.0",
     "socket.io": "^1.7.2",
     "vision": "^4.1.1"

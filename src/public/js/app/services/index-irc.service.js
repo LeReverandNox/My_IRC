@@ -15,7 +15,8 @@
             changeNickname: changeNickname,
             listCommands: listCommands,
             whois: whois,
-            listServerUsers: listServerUsers
+            listServerUsers: listServerUsers,
+            getUptime: getUptime
         };
 
         function changeNickname(nickname, cb) {
@@ -32,6 +33,10 @@
 
         function listServerUsers(cb) {
             socketService.emit("listServerUsers", cb);
+        }
+
+        function getUptime(cb) {
+            socketService.emit("getUptime", cb);
         }
 
         socketService.on("hasChangeNickname", function (data) {

@@ -333,6 +333,8 @@ var handlers = function (ircService, io) {
                     channel: channel,
                     timestamp: tools.now()
                 });
+                user.messageCount += 1;
+
                 console.log(`[${tools.datetime()}] - ${user.nickname} send a gif to channel [${channel}] !`);
                 return cb({ error: false, nickname: "SERVER", message: `Your gif was delivered`, timestamp: tools.now() });
             });
@@ -479,6 +481,24 @@ var handlers = function (ircService, io) {
         }
     };
 
+    var getUptime = {
+        desc: "/uptime - Display the uptime of the server",
+        action: function (cb) {
+            var socket = this;
+            var user = ircService.getUserBySocketId(socket.id);
+
+            var timespan = tools.getUptime();
+
+            console.log(`[${tools.datetime()}] - ${user.nickname} ask for the server uptime !`);
+            return cb({
+                error: false,
+                nickname: "SERVER",
+                message: `The server has been up for ${timespan}`,
+                timestamp: tools.now()
+            });
+        }
+    };
+
     var disconnect = {
         desc: null,
         action: function () {
@@ -522,6 +542,7 @@ var handlers = function (ircService, io) {
         sendMessageAll: sendMessageAll,
         whois: whois,
         listServerUsers: listServerUsers,
+        getUptime: getUptime,
         disconnect: disconnect
     };
 };

@@ -7,6 +7,7 @@ var Chance = require("chance");
 var chance = new Chance();
 var request = require("request");
 var config = require("../../../config");
+var timespan = require('readable-timespan');
 
 var leftPadDate = function (elem) {
     if (elem < 10) {
@@ -72,6 +73,9 @@ var tools = {
             var gifUrl = parsedBody.data.fixed_height_downsampled_url;
             cb(false, gifUrl);
         });
+    },
+    getUptime: function () {
+        return timespan.parse(process.uptime() * 1000);
     }
 };
 

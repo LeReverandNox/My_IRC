@@ -38,7 +38,11 @@ exports.register = function (server, options, next) {
         socket.on("ameAction", handlers.ameAction.action);
         socket.on("sendMessageAll", handlers.sendMessageAll.action);
 
+        /*
+         * System
+         */
         socket.on("listCommands", handlers.listCommands.action);
+        socket.on("getUptime", handlers.getUptime.action);
 
         socket.on("disconnect", handlers.disconnect.action);
     }

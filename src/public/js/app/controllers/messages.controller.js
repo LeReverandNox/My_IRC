@@ -39,6 +39,7 @@
         $rootScope.$on("selfMessageAllSent", displayMessage);
         $rootScope.$on("whois", displayMessage);
         $rootScope.$on("listServerUsers", displayMessage);
+        $rootScope.$on("getUptime", displayMessage);
         $rootScope.$on("unknowCommand", displayMessage);
 
         function displayMessage(e, data) {

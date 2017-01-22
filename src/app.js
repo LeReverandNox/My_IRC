@@ -1,8 +1,6 @@
 /*jslint node: true this:true es6:true */
 /*global this*/
 
-/// <reference path="../typings/index.d.ts" />
-
 "use strict";
 const Hapi = require("hapi");
 const ejs = require("ejs");
@@ -10,6 +8,7 @@ const config = require("./config");
 const plugins = require("./plugins");
 const routes = require("./routes");
 const tools = require("./plugins/irc/lib/tools");
+
 const server = new Hapi.Server({
     connections: {
         routes: {
