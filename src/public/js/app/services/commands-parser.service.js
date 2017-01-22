@@ -98,6 +98,9 @@
             case "ausers":
                 commandsService.listServerUsers();
                 break;
+            case "uptime":
+                commandsService.getUptime();
+                break;
             default:
                 $rootScope.$emit("unknowCommand", { error: true, nickname: "", message: "Unknown command, please refer to /help.", timestamp: new Date().getTime() });
                 break;
