@@ -5,9 +5,12 @@
     <md-content scroll-glue style="height: 90%;">
         <div ng-repeat="message in I.currChannel.messages">
             <md-list-item layout="column" layout-align="none" class="small-list">
-                <p class="angular-with-newlines"> {{ message.text }} </p>
+                <p class="angular-with-newlines" ng-bind-html="message.text | linky"></p>
                 <div ng-if="message.attachment">
                     <img ng-src="{{ message.attachment }}"/>
+                </div>
+                <div ng-if="message.videoId">
+                    <youtube-video video-id="message.videoId"></youtube-video>
                 </div>
             </md-list-item>
         </div>

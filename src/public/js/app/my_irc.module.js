@@ -6,9 +6,11 @@
 
     angular.module("my_irc", [
         "ngMaterial",
+        "ngSanitize",
         "ui.router",
         "btford.socket-io",
-        "luegg.directives"
+        "luegg.directives",
+        "youtube-embed"
     ]);
 
 }());
