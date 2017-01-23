@@ -93,6 +93,12 @@
             init();
         });
 
+        $rootScope.$on("selfChangeNickname", function (e, data) {
+            if (data.newNickname) {
+                I.nickname = data.newNickname;
+            }
+        });
+
         $window.onfocus = function () {
             I.focus = true;
             I.resetUnreadCount(I.currChannel);
