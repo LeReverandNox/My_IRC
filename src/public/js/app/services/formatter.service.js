@@ -67,6 +67,9 @@
 
             return {
                 text: date + " " + nickname + " " + content,
+                nickname: data.nickname,
+                content: content,
+                date: date,
                 attachment: attachment,
                 videoId: videoId
             };
