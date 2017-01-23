@@ -13,14 +13,17 @@
     function notificationsService(webNotification, $rootScope) {
         var service = {
             show: show,
-            notifHandler: notifHandler
+            notifHandler: notifHandler,
+            format: format
         };
 
         return service;
 
-        function show(channelName, content) {
+        function show(channelName, message) {
+            var formattedMsg = this.format(message);
+
             var options = {
-                body: content.text,
+                body: formattedMsg,
                 autoClose: 3000
             };
 
@@ -28,6 +31,16 @@
         }
 
         function notifHandler(error, hide) {
+        }
+
+        function format(message) {
+            var content = "";
+            if (message.nickname !== "SERVER") {
+                content += "<" + message.nickname + "> ";
+            }
+            content += message.content;
+
+            return content;
         }
     }
 } ());
