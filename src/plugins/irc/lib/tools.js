@@ -76,6 +76,9 @@ var tools = {
     },
     getUptime: function () {
         return countdown(Date.now() - process.uptime() * 1000).toString();
+    },
+    getUserUptime(connectionDate) {
+        return countdown(connectionDate);
     }
 };
 
