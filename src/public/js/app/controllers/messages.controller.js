@@ -8,9 +8,9 @@
         .module("my_irc")
         .controller("Messages", MessagesController);
 
-    MessagesController.$inject = ["$rootScope", "$scope", "formatterService"];
+    MessagesController.$inject = ["$rootScope", "$scope", "formatterService", "notificationsService"];
 
-    function MessagesController($rootScope, $scope, formatterService) {
+    function MessagesController($rootScope, $scope, formatterService, notificationsService) {
         var M = this;
         var I = $scope.I;
 
@@ -53,15 +53,20 @@
                 channel.messages.push(message);
                 if (channelName !== I.currChannel.name) {
                     I.incUnreadCount(channel);
+                    if (message.nickname !== I.nickname) {
+                        notificationsService.show(channelName, message);
+                    }
                 } else {
                     if (!I.focus) {
                         I.incUnreadCount(channel);
+                        notificationsService.show(channelName, message);
                     }
                 }
             } else {
                 I.currChannel.messages.push(message);
                 if (!I.focus) {
                     I.incUnreadCount(I.currChannel);
+                    notificationsService.show(I.currChannel.name, message);
                 }
             }
         }
