@@ -10,7 +10,8 @@
         "ui.router",
         "btford.socket-io",
         "luegg.directives",
-        "youtube-embed"
+        "youtube-embed",
+        "angular-web-notification"
     ]);
 
 }());

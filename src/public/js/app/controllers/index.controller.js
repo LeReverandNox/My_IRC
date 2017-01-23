@@ -77,6 +77,7 @@
         function init() {
             I.channels = [];
             I.personnalChannel = {
+                name: "Personnal Channel",
                 messages: [],
                 unreadCount: 0
             };
@@ -90,6 +91,12 @@
 
         $rootScope.$on("disconnect", function (e) {
             init();
+        });
+
+        $rootScope.$on("selfChangeNickname", function (e, data) {
+            if (data.newNickname) {
+                I.nickname = data.newNickname;
+            }
         });
 
         $window.onfocus = function () {
