@@ -15,6 +15,8 @@
 
         I.title = "My_IRC";
         I.focus = true;
+        I.message = null;
+        I.nickname = null;
 
         init();
 
@@ -82,6 +84,9 @@
                 unreadCount: 0
             };
             I.currChannel = I.personnalChannel;
+
+            I.message = null;
+            I.nickname = null;
         }
 
         $rootScope.$on("handshake", function (e, data) {
@@ -96,6 +101,7 @@
         $rootScope.$on("selfChangeNickname", function (e, data) {
             if (data.newNickname) {
                 I.nickname = data.newNickname;
+                I.message = I.message.replace(data.oldNickname, data.newNickname);
             }
         });
 
