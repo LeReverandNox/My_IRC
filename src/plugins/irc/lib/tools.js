@@ -7,7 +7,7 @@ var Chance = require("chance");
 var chance = new Chance();
 var request = require("request");
 var config = require("../../../config");
-var timespan = require('readable-timespan');
+var countdown = require("countdown");
 
 var leftPadDate = function (elem) {
     if (elem < 10) {
@@ -75,7 +75,7 @@ var tools = {
         });
     },
     getUptime: function () {
-        return timespan.parse(process.uptime() * 1000);
+        return countdown(Date.now() - process.uptime() * 1000).toString();
     }
 };
 
