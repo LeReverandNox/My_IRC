@@ -197,7 +197,7 @@ var handlers = function (ircService, io) {
                         timestamp: tools.now()
                     });
                 });
-                return cb({ error: false, nickname: "", message: msg || `You change your nickname from ${oldNickname} to ${user.nickname}`, newNickname: newNickname, timestamp: tools.now() });
+                return cb({ error: false, nickname: "", message: msg || `You change your nickname from ${oldNickname} to ${user.nickname}`, newNickname: user.nickname, oldNickname: oldNickname, timestamp: tools.now() });
             });
         }
     };

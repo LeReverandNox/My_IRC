@@ -22,7 +22,7 @@ var ircService = function (server, io) {
                 socketId: socket.id,
                 socket: socket,
                 ip: socket.handshake.headers["x-real-ip"],
-                connectionDate: new Date().toUTCString(),
+                connectionDate: Date.now(),
                 messageCount: 0,
                 channels: []
             };
@@ -132,7 +132,7 @@ var ircService = function (server, io) {
             var channels = user.channels.join(" ");
             return [
                 `IP address: ${user.ip}`,
-                `Online since: ${user.connectionDate}`,
+                `Online since: ${tools.getUserUptime(user.connectionDate)}`,
                 `Joined channels: ${channels}`,
                 `Number of sent messages: ${user.messageCount}`
             ];
