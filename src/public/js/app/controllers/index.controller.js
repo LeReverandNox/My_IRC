@@ -79,7 +79,6 @@
         function init() {
             I.channels = [];
             I.personnalChannel = {
-                name: "Personnal Channel",
                 messages: [],
                 unreadCount: 0
             };

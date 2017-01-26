@@ -66,7 +66,7 @@
                 I.currChannel.messages.push(message);
                 if (!I.focus) {
                     I.incUnreadCount(I.currChannel);
-                    notificationsService.show(I.currChannel.name, message);
+                    notificationsService.show(I.currChannel.name || "Personnal Channel", message);
                 }
             }
         }
