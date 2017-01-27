@@ -11,7 +11,8 @@
         "btford.socket-io",
         "luegg.directives",
         "youtube-embed",
-        "angular-web-notification"
+        "angular-web-notification",
+        "ngEmbed"
     ]);
 
 }());
