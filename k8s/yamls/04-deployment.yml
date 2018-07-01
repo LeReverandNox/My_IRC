@@ -1,0 +1,57 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: my-irc-deployment
+  namespace: my-irc
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: my-irc
+    spec:
+      containers:
+      - name: my-irc
+        image: lereverandnox/my_irc
+        env:
+        - name: APPLICATION_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: my-irc-config
+              key: APPLICATION_ENV
+        - name: GIPHY_BASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: my-irc-config
+              key: GIPHY_BASE_URL
+        - name: GIPHY_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: my-irc-secret
+              key: GIPHY_API_KEY
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 2
+          successThreshold: 1
+          timeoutSeconds: 2
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 2
+          successThreshold: 2
+          timeoutSeconds: 2
+        ports:
+        - containerPort: 80
+          protocol: TCP
+          name: my-irc-http
+      restartPolicy: Always

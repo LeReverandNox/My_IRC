@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: my-irc-ingress
+  namespace: my-irc
+spec:
+  rules:
+  - host: ${MY_IRC_HOSTNAME}
+    http:
+      paths:
+      - backend:
+          serviceName: my-irc-service
+          servicePort: 80
+        path: /
+  tls:
+  - hosts:
+    - ${MY_IRC_HOSTNAME}
+    secretName: my-irc-${CERTIFICATE_NAME}-tls
