@@ -3,6 +3,9 @@ kind: Ingress
 metadata:
   name: my-irc-ingress
   namespace: my-irc
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   rules:
   - host: ${MY_IRC_HOSTNAME}
