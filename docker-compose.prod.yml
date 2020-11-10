@@ -1,0 +1,22 @@
+version: "3"
+services:
+  my-irc:
+    restart: unless-stopped
+    networks:
+      - proxy
+    labels:
+      # HTTP
+      - traefik.http.routers.$PREFIX-http.entrypoints=http
+      - traefik.http.routers.$PREFIX-http.rule=Host("$IRC_HOST")
+
+      # Redirect
+      - traefik.http.routers.$PREFIX-http.middlewares=https-redirect@docker
+
+      # HTTPS
+      - traefik.http.routers.$PREFIX-https.entrypoints=https
+      - traefik.http.routers.$PREFIX-https.rule=Host("$IRC_HOST")
+      - traefik.http.routers.$PREFIX-https.tls=true
+      - traefik.http.routers.$PREFIX-https.tls.certresolver=le-prod
+networks:
+  proxy:
+    external: true

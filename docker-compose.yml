@@ -1,21 +1,9 @@
-version: '2'
+version: "3"
 services:
-    my-irc:
-        build: .
-        restart: always
-        # volumes:
-            # FOR DEV PURPOSE ONLY - Disable in production
-            # - ./src:/src
-        environment:
-            - VIRTUAL_HOST=$IRC_HOST
-            - GIPHY_API_KEY=$GIPHY_API_KEY
-            - GIPHY_BASE_URL=$GIPHY_BASE_URL
-            - APPLICATION_ENV=$APPLICATION_ENV
-    reverse-proxy:
-        image: jwilder/nginx-proxy
-        restart: always
-        ports:
-            - $PROXY_HTTP_PORT:80/tcp
-            - $PROXY_HTTPS_PORT:443/tcp
-        volumes:
-            - $DOCKER_SOCK:/tmp/docker.sock:ro
+  my-irc:
+    container_name: my-irc
+    image: lereverandnox/my_irc
+    environment:
+      - GIPHY_API_KEY=$GIPHY_API_KEY
+      - GIPHY_BASE_URL=$GIPHY_BASE_URL
+      - APPLICATION_ENV=$APPLICATION_ENV

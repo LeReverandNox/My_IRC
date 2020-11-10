@@ -1,4 +1,4 @@
-FROM library/node:7.3
+FROM library/node:8.3
 
 RUN npm install -g bower
 
@@ -17,4 +17,4 @@ ADD src /src
 
 EXPOSE 80
 
-CMD npm start
+ENTRYPOINT ["npm", "run", "start"]

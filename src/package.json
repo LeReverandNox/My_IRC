@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "grunt && forever --minUptime 1 -c 'nodemon -e js,ejs --exitcrash' app.js"
+    "start": "grunt && forever --minUptime 1 app.js",
+    "dev": "grunt && forever --minUptime 1 -c 'nodemon -e js,ejs --exitcrash' app.js"
   },
   "author": "laidet_r",
   "license": "ISC",
